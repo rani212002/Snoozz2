@@ -1,0 +1,41 @@
+.top_sec_margin {
+    margin-top: 8rem;
+}
+
+.like_btn {
+    left: 1vw;
+    top: 2.2vh;
+    padding: 10px;
+    border-radius: 100px;
+    border: 1px solid #72d271;
+}
+
+@media screen and(max-width:768px) {
+    .like_btn {
+        left: 0vw !important;
+        top: 0.2vh;
+        padding: 1px;
+        border-radius: 100px;
+        border: 1px solid #72d271;
+    }
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--bs-progress-bar-color);
+    text-align: center;
+    white-space: nowrap;
+    background-color: #72d271;
+    transition: var(--bs-progress-bar-transition);
+}
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
+}
+
+.coin_image {
+    width: 50%;
+}

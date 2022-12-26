@@ -1,0 +1,22 @@
+::-webkit-file-upload-button {
+    display: none;
+}
+
+.select_container {
+
+    border: 2px dashed #72d271;
+    border-radius: 20px;
+
+}
+
+.select_width {
+    width: 25%;
+}
+
+@media screen and (max-width:768px) {
+
+    .select_width {
+        width: 100% !important;
+    }
+
+}

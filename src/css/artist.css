@@ -1,0 +1,51 @@
+.artist_img {
+    border-radius: 100%;
+    background-color: transparent;
+}
+
+.artist_btn_left {
+    border-right: 2px solid #2b2c31;
+    border-top: 2px solid #2b2c31;
+    color: white;
+}
+
+.artist_btn_left:hover {
+    border-right: 2px solid #2b2c31;
+    border-top: 2px solid #2b2c31;
+    color: #72d271;
+}
+
+.artist_btn_right {
+    border-top: 2px solid #2b2c31;
+    color: white;
+}
+
+.artist_btn_right:hover {
+    border-top: 2px solid #2b2c31;
+    color: #72d271;
+}
+
+.artist_card {
+    border: 2px solid #2b2c31;
+    width: 25%;
+}
+
+@media (max-width:768px) {
+    .artist_card {
+        border: 2px solid #2b2c31;
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) and (max-width:1200px) {
+    .artist_card {
+        border: 2px solid #2b2c31;
+        width: 50%;
+    }
+}
+
+.artist_card:hover {
+    border: 2px solid #72d271;
+    transition-duration: 0.5s;
+    transform: translateY(-5px) translateZ(0);
+}
