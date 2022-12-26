@@ -43,11 +43,6 @@ function App() {
         <Route path="/verify" element={<Verify />}></Route>
         <Route path="/buytoken" element={<Buytoekn />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-
-
-
-
-
       </Routes>
       <Footer />
     </>

@@ -15,6 +15,8 @@ export default function Activity(props) {
         // console.log('data');
         // console.log(data);
         setActivity(data)
+        setuserid(data.id)
+        console.log(userid)
         
         const postData = { user_id: userid };
         const response =  axios({
@@ -34,7 +36,7 @@ export default function Activity(props) {
  
         return (
         <>
-           
+          
         </>
     )
 }
