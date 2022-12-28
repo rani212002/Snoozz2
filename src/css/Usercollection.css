@@ -1,0 +1,13 @@
+.bg_cover
+{
+    background-image: url('../img/cover.jpg');
+    background-size: cover;
+    background-color: aqua;
+    height: 400px;
+
+}
+.artist_img
+{
+    width: 20%;
+    
+}

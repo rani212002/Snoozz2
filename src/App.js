@@ -20,6 +20,12 @@ import StakingReward from "./components/StakingReward";
 import Verify from "./components/Verify";
 import Buytoekn from "./components/Buytoekn";
 import Dashboard from "./components/Dashboard";
+import Buytokenlist from "./components/Buytokenlist";
+import NFTlist from "./components/NFTlist";
+import Staking from "./components/Staking";
+import Watchlist from "./components/Watchlist";
+import Artistcollected from "./components/Artistcollected";
+import Usercollection from "./components/Usercollection";
 function App() {
 
   return (
@@ -40,9 +46,20 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/referaal" element={<Referaal />}></Route>
         <Route path="/stakingreward" element={<StakingReward />}></Route>
+        <Route path="/staking" element={<Staking/>}></Route>
+
         <Route path="/verify" element={<Verify />}></Route>
         <Route path="/buytoken" element={<Buytoekn />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/buytokenlist" element={<Buytokenlist />}></Route>
+        <Route path="/nftlist" element={<NFTlist />}></Route>
+        <Route path="/watchlist" element={<Watchlist />}></Route>
+        <Route path="/artist-collected" element={<Artistcollected />}></Route>
+        <Route path="/usercollection" element={<Usercollection />}></Route>
+
+
+
+
       </Routes>
       <Footer />
     </>

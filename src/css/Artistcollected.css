@@ -1,0 +1,18 @@
+.rotate
+{
+    transform: rotate(90deg);
+}
+.menue:hover , menu:focus
+{
+    border: 1px solid #72d271;
+    color: white;
+}
+.menu.active
+{
+    border: 1px solid #72d271;
+    color: white;
+}
+.dd_text
+{
+    color: white;
+}

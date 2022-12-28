@@ -1,7 +1,39 @@
-import React from 'react'
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios'
 import '../css/dashboard.css'
 
 export default function Dashboard() {
+    const[userid,setuserid] = useState()
+    const [dashboard , setdashboard] = useState([])
+    
+
+    useEffect(()=>{
+        let localData=localStorage.getItem('userauth');
+        let data = JSON.parse(localData)
+        console.log('data');
+        console.log(data.id);
+        setuserid(data)
+        console.log('userid')
+        // console.log(userid)
+        
+        const postData = { user_id: userid };
+        const response =  axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            url: process.env.REACT_APP_API_PATH + 'dashboard',
+            data: postData,
+          }).then(async function (response) {
+            const res = await response.data.data;
+            console.log("hdhdhddh")
+              console.log(res)
+              setdashboard(res)
+            });
+            
+    }, [])
+    console.log("i am activity")
+    console.log(dashboard)
+
     return (
         <>
             <div className="container top_sec_margin">
@@ -16,12 +48,12 @@ export default function Dashboard() {
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Current Price</h6>
-                                <p className='color_theme'>$0.0222</p>
+                                <p className='color_theme'>${dashboard.snoozz_current_price}</p>
                             </div>
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Next Price</h6>
-                                <p className='color_theme'>$0.0222</p>
+                                <p className='color_theme'>${dashboard.snoozz_next_price}</p>
                             </div>
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
@@ -47,12 +79,12 @@ export default function Dashboard() {
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>
                                     Referral Rewards</h6>
-                                <p className='color_theme'>$0.0222</p>
+                                <p className='color_theme'>{dashboard.reward_wallet}</p>
                             </div>
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Your Referrals</h6>
-                                <p className='color_theme'>$0.0222</p>
+                                <p className='color_theme'>{dashboard.referral}</p>
                             </div>
                         </div>
                     </div>
@@ -78,7 +110,6 @@ export default function Dashboard() {
                                         <div className="d-flex justify-content-center">
                                             <button type="button" class="btn theme_two me-2 ">Secondary</button>
                                             <button type="button" class="btn theme_two">Secondary</button>
-
                                         </div>
                                     </div>
                                 </div>
@@ -98,12 +129,10 @@ export default function Dashboard() {
                                         <h4 className='text-light'>Referral Link</h4>
                                         <input type="email" class="form-control text-dark mt-1 mb-1" id="exampleInputEmail1" aria-describedby="emailHelp" />
                                         <div className="text-center">
-
                                             <i class="fa-brands fa-instagram fa-2x color_theme mx-1"></i>
                                             <i class="fa-brands fa-whatsapp fa-2x color_theme mx-1"></i>
                                             <i class="fa-brands fa-twitter fa-2x color_theme mx-1"></i>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

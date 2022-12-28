@@ -6,6 +6,7 @@ import Lottie from 'react-lottie';
 import reward from '../loitte/reward.json'
 import invite from '../loitte/invite.json'
 import Table from './Table';
+import ReferaalTable from './ReferaalTable';
 
 export default function Referaal(props) {
     const defaultOptions = {
@@ -112,7 +113,7 @@ export default function Referaal(props) {
                 </div>
                 <hr></hr>
                 <div className="mx-5">
-                    <Table />
+                    <ReferaalTable/>
                 </div>
             </div>
 

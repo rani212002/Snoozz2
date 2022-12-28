@@ -14,9 +14,10 @@ export default function Discover_item() {
                     </div>
                     <button type="button" class="btn btn_squre_theeme ms-2 ">Search</button>
                 </div>
-
                 <div className="mt-5">
+                <div className="row">
                     <Discoveritemcards />
+                </div>
                 </div>
             </div>
         </>

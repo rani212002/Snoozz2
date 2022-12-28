@@ -7,7 +7,9 @@ import stakenft from '../loitte/stakenft.json'
 import Reward from '../loitte/reward.json'
 import Table from './Table'
 import Staking_reward from '../img/staking_reward.png'
+import StakingrewardTable from './StakingrewardTable';
 export default function StakingReward() {
+
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -138,7 +140,7 @@ export default function StakingReward() {
                 </div>
                 <hr></hr>
                 <div className="mx-5">
-                    <Table />
+                  <StakingrewardTable/>
                 </div>
             </div>
         </>

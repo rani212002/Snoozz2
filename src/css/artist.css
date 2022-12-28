@@ -27,20 +27,20 @@
 
 .artist_card {
     border: 2px solid #2b2c31;
-    width: 25%;
+    /* width: 25%; */
 }
 
 @media (max-width:768px) {
     .artist_card {
         border: 2px solid #2b2c31;
-        width: 100%;
+        /* width: 100%; */
     }
 }
 
 @media (min-width: 769px) and (max-width:1200px) {
     .artist_card {
         border: 2px solid #2b2c31;
-        width: 50%;
+        /* width: 50%; */
     }
 }
 

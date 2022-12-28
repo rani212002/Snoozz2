@@ -35,6 +35,7 @@ export default function Navbar() {
 
   async function requestAccount() {
 
+
     if (window.ethereum) {
       try {
         const account = await window.ethereum.request({
@@ -62,8 +63,9 @@ export default function Navbar() {
           let b = account[0].slice(-3)
           let c = a + "..." + b
           setsmwalletaddress(c)
+          console.log(smwalladdress)
           setwall_content("Disconnect")
-
+          localStorage.setItem("smwallet",c)
         }
 
       } catch (error) {
@@ -136,6 +138,16 @@ var userid = data.id
                           Dashboard
                         </a>
                       </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/watchlist">
+                          Watch List
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/usercollection">
+                          User Collection
+                        </a>
+                      </li>
                     </div>
                     <div className="col-sm-4 col-6">
                       <li>
@@ -158,6 +170,16 @@ var userid = data.id
                       <li>
                         <a className="dropdown-item dd_item" href="/discoveritem">
                           Discover Items
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/buytokenlist">
+                         Buy Token List
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/nftlist">
+                        NFT LIST
                         </a>
                       </li>
                     </div>
@@ -185,6 +207,16 @@ var userid = data.id
                       <li>
                         <a className="dropdown-item dd_item" href="/stakingreward">
                           Staking Reward
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/staking">
+                          Staking
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/artist-collected">
+                        Artistcollected
                         </a>
                       </li>
                     </div>
