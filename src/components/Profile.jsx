@@ -4,36 +4,41 @@ import axios from 'axios'
 import Profiletabs from './Profiletabs'
 import '../css/profile.css'
 import { errors } from 'ethers';
+import { get_user } from './allfun';
 
 export default function Profile() {
     const [countrydata, setcountryData] = useState([])
-    // const [profiledata,setprofiledata] = useState([])
-    // const[profile,setprofile]= useState()
+
     const [userid, setuserid] = useState()
     const [success, setSuccess] = useState("")
     const [errors, setErrors] = useState([])
+    const userauth = get_user()
 
     const [profiledata, setprofiledata] = useState(
         {
             name: "",
             uname: "",
             email: "",
-            country: "",
-        }
-    )
-
-    const [profile, setprofile] = useState(
-        {
             country: ""
         }
     )
-    useEffect(() => {
-        let localData = localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        console.log('data');
-        console.log(data.id);
 
-        const postData = { user_id: data.id };
+    //get country
+    const getcountry = async () => {
+        const response = axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            url: process.env.REACT_APP_API_PATH + 'profile'
+        }).then(async function (response) {
+            const res = await response.data.data;
+            setcountryData(res.countries)
+            console.log(countrydata)
+        });
+    };
+    //getprofile
+    const getProfile = async () => {
+        const postData = { user_id: userauth.id };
+        console.log(userauth.id)
         const response = axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -41,22 +46,19 @@ export default function Profile() {
             data: postData
         }).then(async function (response) {
             const res = await response.data.data;
-            console.log(res)
-            setcountryData(res.countries)
-            setprofile(res.profile.country)
+            res.user_details.country = res.profile.country
             setprofiledata(res.user_details)
-            console.log(profile)
+            console.log('profiledata')
+            console.log(profiledata)
         });
-    }, []);
+    };
+    //updateprofile
 
     const submitProfile = async () => {
-        let localData = localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        console.log('data');
-        console.log(data.id);
-        profiledata.user_id = 2;
-        profiledata.country = profile
+        profiledata.user_id = userauth.id;
         const postData = profiledata;
+        console.log('profiledata');
+        console.log(profiledata);
         await axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -65,6 +67,7 @@ export default function Profile() {
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
                 setSuccess(res.data.message)
+
             } else {
             }
         }).catch((err) => {
@@ -77,10 +80,15 @@ export default function Profile() {
             setSuccess("")
         });
     };
+    const closeMessage = (e) => {
+        if (e == 1) {
+            // setError("")
+            setSuccess("")
+        }
+    }
 
     const handleChange = ({ currentTarget: input }) => {
         setprofiledata({ ...profiledata, [input.name]: input.value })
-
         if (input.name == "") {
             setErrors([])
         }
@@ -90,7 +98,10 @@ export default function Profile() {
             setErrors({ ...errors, [input.name]: false })
         }
     }
-
+    useEffect(() => {
+        getProfile()
+        getcountry()
+    }, []);
     return (
         <>
             <div className="container mt-5">
@@ -114,7 +125,12 @@ export default function Profile() {
                         <div className="tab-content" id="nav-tabContent">
                             <div className="tab-pane  tab_pane fade show active" id="nav-personalsetting" role="tabpanel" aria-labelledby="nav-personalsetting-tab" tabIndex="0">
                                 <form>
-
+                                    {success != '' &&
+                                        <div className="alert alert-success alert-dismissible fade show">
+                                            <strong>Success!</strong> {success}
+                                            <button type="button" className="btn-close" onClick={() => closeMessage(1)} ></button>
+                                        </div>
+                                    }
                                     <div className="container p-5 select_container mt-5">
                                         <p className='color_theme text-center'> PNG, JPG, JPEG
                                             Height: 500, Width: 500</p>
@@ -127,8 +143,6 @@ export default function Profile() {
                                         <label htmlFor="name" className="form-label color_pencile">Name</label>
                                         <input type="text" className="form-control bg-transparent border_theme_1px  color_theme p-2" value={profiledata.name} placeholder='Name' name='name' onChange={handleChange} id="name" />
                                         {errors && <span className="text-danger">{errors.name}</span>}
-                                        {/* {errors && <span className="text-danger">{errors.name}</span>} */}
-
                                     </div>
                                     <div className="mb-3 mt-3">
                                         <label htmlFor="username" className="form-label color_pencile">Username</label>
@@ -142,12 +156,12 @@ export default function Profile() {
 
                                     </div>
                                     <div className="mb-3 mt-3">
-                                        {/* <label htmlFor="wallet" className="form-label color_pencile">Country</label>
-                            <input type="text" className="form-control bg-transparent border_theme_1px  color_theme p-2 " placeholder='Country' name='country' value={formdata.country} onChange={handleChange} id="wallet" /> */}
+
                                         <label htmlFor="country" className="form-label color_pencile">Country</label>
-                                        <select className="form-select bg-transparent border_theme_1px  color_theme p-2" name='country' value={countrydata.countries} onChange={handleChange} aria-label="Default select example">
+                                        <select className="form-select bg-transparent border_theme_1px  color_theme p-2" value={profiledata.country} name='country' onChange={handleChange} aria-label="Default select example">
+
                                             {countrydata.map((e) => {
-                                                if (profile == e.name) {
+                                                if (profiledata == e.name) {
                                                     return <option key={e.id} defaultValue className="bg-dark">{e.name}</option>
                                                 } else {
                                                     return <option key={e.id} className="bg-dark">{e.name}</option>

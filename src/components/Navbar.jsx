@@ -112,7 +112,7 @@ var userid = data.id
                 </a>
                 <ul className="dropdown-menu dd_menue main_pages_btn black_one_bg border_theme_1px">
                   <div className="row">
-                    <div className="col-sm-4 col-6">
+                    <div className="col-sm-3 col-6">
                       <li>
                         <a className="dropdown-item dd_item" href="/activity" name="nsadsjadhakjsdhakjdhsakj">
                           Activity
@@ -134,6 +134,11 @@ var userid = data.id
                         </a>
                       </li>
                       <li>
+                        <a className="dropdown-item dd_item" href="/BuyNft">
+                          BuyNFT
+                        </a>
+                      </li>
+                      <li>
                         <a className="dropdown-item dd_item" href="/dashboard">
                           Dashboard
                         </a>
@@ -149,7 +154,7 @@ var userid = data.id
                         </a>
                       </li>
                     </div>
-                    <div className="col-sm-4 col-6">
+                    <div className="col-sm-3 col-6">
                       <li>
                         <a className="dropdown-item dd_item" href="/artist">
                           Asrtist
@@ -166,6 +171,9 @@ var userid = data.id
                         </a>
                       </li>
                       <li>
+                      <a className="dropdown-item dd_item" href="/likecol">
+                          Like Collection
+                        </a>
                       </li>
                       <li>
                         <a className="dropdown-item dd_item" href="/discoveritem">
@@ -182,8 +190,13 @@ var userid = data.id
                         NFT LIST
                         </a>
                       </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/support">
+                       Support
+                        </a>
+                      </li>
                     </div>
-                    <div className="col-sm-4 col-6">
+                    <div className="col-sm-3 col-6">
                       <li>
                         <a className="dropdown-item dd_item" href="/discovercollection">
                           Discover collection
@@ -217,6 +230,27 @@ var userid = data.id
                       <li>
                         <a className="dropdown-item dd_item" href="/artist-collected">
                         Artistcollected
+                        </a>
+                      </li>
+                    </div>
+                    <div className="col-sm-3 col-6">
+                    <li>
+                        <a className="dropdown-item dd_item" href="/adminsetting">
+                          Admin Setting
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/adminuser">
+                          Admin user
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item dd_item" href="/adduser">
+                          Add User
+                        </a>
+                      </li><li>
+                        <a className="dropdown-item dd_item" href="/adminverify">
+                         Admin Verify
                         </a>
                       </li>
                     </div>

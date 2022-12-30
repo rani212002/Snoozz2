@@ -3,22 +3,21 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios'
 import { Wallet } from "ethers";
-import { smallwalletaddress } from './allfun';
+import { smallwalletaddress, get_user } from './allfun';
 
 export default function Artistcards() {
     const [artistData, setartistData] = useState([]);
-    const[userid,setuserid]= useState("")
+    const userauth = get_user();
+    const [followstatus , setfollowstatus]=useState()
+  
     useEffect(() => {
-        let localData=localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        // console.log('data');
-        // console.log(data);
-        setuserid(data.id)
-        // console.log(userid)
-        // console.log(wallet)
-        
-        
-        const postData = { user_id: userid };
+      getartist()
+    }, []);
+
+    //get artist data
+    const getartist = async (id) => {
+    
+      const postData = { user_id: userauth.id};
       const response = axios({
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -30,9 +29,22 @@ export default function Artistcards() {
         console.log(res);
         setartistData(res);
       });
-    }, []);
-    console.log(artistData)
-
+    }
+    //follow artist
+    const followartist = async (id) => {
+    const postData = { user_id:userauth.id,id:id};
+    const response = axios({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      url: process.env.REACT_APP_API_PATH+"follow-artist",
+      data:postData
+    }).then(async function (response) {
+      const res = await response.data
+      getartist()
+      setfollowstatus(res)
+    });
+    }
+    
     return (
         <>
      {artistData.map((e) => {
@@ -46,7 +58,7 @@ export default function Artistcards() {
                     <h5 className="card-title color_pencile mt-1">{e.name==""?"user":e.name}</h5>
                     <p className="card-text color_pencile">{e.wallet ==""?smallwalletaddress(e.Wallet):e.wallet}</p>
                     <div className="d-flex justify-content-center">
-                        <a href="#" className="Snoozz_fn_button p-3 w-50 shdow_green">{e.follow_status==1?"Followed":"Follow"}</a>
+                        <a href="#" onClick={() => followartist(e.id)} className="Snoozz_fn_button p-3 w-50 shdow_green">{<i id={"ficone-" + e.id} class={e.follow_status==0?"fa-sharp fa-solid fa-plus me-1":"fa-solid fa-check me-1"}></i>}{e.follow_status==1?"Followed":"Follow"}</a>
                     </div>
                 </div>
                 <div className="btn-group" role="group" aria-label="Basic example">
@@ -57,6 +69,6 @@ export default function Artistcards() {
             </div>
       })}
     
-        </>
+        </> 
     )
 }

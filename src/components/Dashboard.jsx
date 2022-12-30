@@ -2,22 +2,15 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios'
 import '../css/dashboard.css'
+import { get_user } from './allfun';
+
 
 export default function Dashboard() {
-    const[userid,setuserid] = useState()
     const [dashboard , setdashboard] = useState([])
-    
-
+    const usersauth = get_user()
     useEffect(()=>{
-        let localData=localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        console.log('data');
-        console.log(data.id);
-        setuserid(data)
-        console.log('userid')
-        // console.log(userid)
-        
-        const postData = { user_id: userid };
+      
+        const postData = { user_id: usersauth.id };
         const response =  axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -31,9 +24,6 @@ export default function Dashboard() {
             });
             
     }, [])
-    console.log("i am activity")
-    console.log(dashboard)
-
     return (
         <>
             <div className="container top_sec_margin">

@@ -2,24 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Table from './Table'
 import axios from 'axios';
 import '../css/Activity.css'
-import { smallwalletaddress,smdate } from './allfun';
+import { smallwalletaddress,smdate ,get_user} from './allfun';
 
 export default function Activity(props) {
 
     const[userid,setuserid] = useState()
     const [activitydata , setactivitydata] = useState([])
-    
+    const userauth = get_user();
 
     useEffect(()=>{
-        let localData=localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        console.log('data');
-        console.log(data.id);
-        setuserid(data)
-        console.log('userid')
-        // console.log(userid)
-        
-        const postData = { user_id: userid };
+      
+        const postData = { user_id: userauth.id };
         const response =  axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

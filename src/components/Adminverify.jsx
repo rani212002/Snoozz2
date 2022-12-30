@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios'
 import { get_user } from './allfun';
-export default function Verify() {
+export default function Adminverify() {
     const [success, setSuccess] = useState("")
     const [errors, setErrors] = useState([])
     const [verify, setverify] = useState(
@@ -123,7 +123,8 @@ export default function Verify() {
                                     
                                 </div>
                                 <div className="d-flex justify-content-center">
-                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitVerification()}>Submit</button>
+                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3 mx-2" onClick={() => submitVerification()}>Approve</button>
+                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitVerification()}>DisApprove</button>
                                 </div>
                             </form>
                         </div>

@@ -4,7 +4,6 @@ import featuresecdata from './featuresecdata'
 import featurenftdata from './Featurenft';
 import featuresupportdata from './featuresupport';
 import kyc from '../img/home/KYC.png';
-
 export default function Feature_tabs(props) {
     const FetureentData = featuresecdata.map((data) => {
         return (

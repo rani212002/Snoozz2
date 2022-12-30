@@ -225,3 +225,15 @@ body {
 .border_grey_2px {
     border: 2px solid #2b2c31;
 }
+.full_rounded
+{
+    border-radius: 100px;
+}
+hr {
+    margin: 1rem 0;
+    color: white;
+    border: 3;
+    border-top: 1px solid;
+    opacity: .25;
+    background: white;
+}

@@ -15,9 +15,7 @@ export default function Buytoekn() {
                         <div className="row">
                             <Buytokencards />
                             <Buytokencards />
-
                             <Buytokencards />
-
                         </div>
                     </div>
                     <div className="col-lg-4">

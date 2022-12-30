@@ -1,4 +1,4 @@
-import "./App.css";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "./components/Navbar";
@@ -26,6 +26,14 @@ import Staking from "./components/Staking";
 import Watchlist from "./components/Watchlist";
 import Artistcollected from "./components/Artistcollected";
 import Usercollection from "./components/Usercollection";
+import Support from "./components/Support";
+import Buynft from './components/Buynft'
+import Adminsetting from "./components/Adminsetting";
+import AdminUser from "./components/AdminUser";
+import Viewuser from "./components/Viewuser";
+import Adduser from "./components/Adduser";
+import LikeCol from "./components/LikeCol";
+import Adminverify from "./components/Adminverify";
 function App() {
 
   return (
@@ -46,7 +54,7 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/referaal" element={<Referaal />}></Route>
         <Route path="/stakingreward" element={<StakingReward />}></Route>
-        <Route path="/staking" element={<Staking/>}></Route>
+        <Route path="/staking" element={<Staking />}></Route>
 
         <Route path="/verify" element={<Verify />}></Route>
         <Route path="/buytoken" element={<Buytoekn />}></Route>
@@ -56,7 +64,18 @@ function App() {
         <Route path="/watchlist" element={<Watchlist />}></Route>
         <Route path="/artist-collected" element={<Artistcollected />}></Route>
         <Route path="/usercollection" element={<Usercollection />}></Route>
+        <Route path="/support" element={<Support />}></Route>
+        <Route path="/buynft" element={<Buynft />}></Route>
+        <Route path="/likecol" element={<LikeCol />}></Route>
+        <Route path="/likecol" element={<LikeCol />}></Route>
 
+        {/* admin pages */}
+        <Route path="/adminsetting" element={<Adminsetting />}></Route>
+        <Route path="/adminuser" element={<AdminUser />}></Route>
+
+        <Route path="/viewuser" element={<Viewuser />}></Route>
+        <Route path="/adduser" element={<Adduser />}></Route>
+        <Route path="/adminverify" element={<Adminverify />}></Route>
 
 
 

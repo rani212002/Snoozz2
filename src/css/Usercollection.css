@@ -11,3 +11,32 @@
     width: 20%;
     
 }
+.rotate:hover
+{
+    transform: rotate(90deg);
+}
+.menue:hover , menu:focus
+{
+    border: 1px solid #72d271;
+    color: white;
+}
+.menu.active
+{
+    border: 1px solid #72d271;
+    color: white;
+
+}
+
+.social_icone:hover
+{
+    /* background-color: white; */
+    color: #72d271;
+    border-radius: 100px;
+}
+.social_icone
+{
+    color: white;
+}
+a , a:hover{
+    color: #212529;
+}

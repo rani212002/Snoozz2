@@ -1,0 +1,23 @@
+.accordion-button:not(.collapsed) {
+    color:white;
+    background-color: #0e0f13;
+    box-shadow: none;
+}
+.accordion-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+    font-size: 1rem;
+    color: white;
+    text-align: left;
+    background-color: #0e0f13;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: var(--bs-accordion-transition);
+}
+.accordion-body {
+    padding: none!important;
+}

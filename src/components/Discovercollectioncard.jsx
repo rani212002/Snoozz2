@@ -2,32 +2,23 @@
 import { useState,useEffect } from 'react'; 
 import React from 'react'
 import axios from "axios";
+import {get_user} from '../components/allfun.js'
 
 
 export default function Discovercollectioncard() {
     const [collnftdata, setcollnftdata] = useState([]);
-    const [userid,setuserid]= useState([])
+    const userauth = get_user()
     useEffect(() => {
-      let localData=localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        console.log('data');
-        console.log(data.id);
-        setuserid(data)
-        console.log('userid')
-        // console.log(userid)
-        
-        const postData = { user_id: userid };
+      const postData = { user_id: userauth.id };
       const response = axios({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         url: process.env.REACT_APP_API_PATH + "collection",
         data: postData,
-
       }).then(async function (response) {
         const res = await response.data.data;
         console.log(res.collections);
         setcollnftdata(res.collections);
-
       });
     }, []);
     return (

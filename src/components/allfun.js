@@ -15,3 +15,11 @@ export function smdate(dateall)
     console.log(a)
     return a ;
 }
+
+
+export function get_user()
+{
+    const userauth = localStorage.getItem('userauth');
+    const json_userauth = JSON.parse(userauth)
+    return json_userauth ;
+}

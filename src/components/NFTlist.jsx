@@ -1,7 +1,6 @@
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { smdate } from './allfun';
-
 export default function NFTlist() {
     const [nftlistdata , setnftlistdata] = useState([])
     useEffect(()=>{
