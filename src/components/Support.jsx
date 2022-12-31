@@ -94,6 +94,7 @@ export default function Support() {
                     <table className="table text-light text-start border-2 wsnwrap">
                         <thead>
                             <tr className='text-center'>
+                                <th>Sr no</th>
                             <th >Date</th>
                             <th >Ticket ID</th>
                             <th >Subject</th>
@@ -103,8 +104,10 @@ export default function Support() {
                             </tr>
                         </thead>
                         <tbody>
-                            {getsupportdata.map((e) => {
+                            {getsupportdata.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
+                                <td>{index+1}</td>
+
                                <td>{smdate(e.created_at)}</td>
                                 <td>{e.ticketNo}</td>
                                 <td>{e.subject}</td>

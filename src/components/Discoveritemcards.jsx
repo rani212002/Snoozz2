@@ -22,7 +22,9 @@ export default function Discoveritemcards() {
     <>
       {nftdata.map((e) => {
         return (
+          
           <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+            <a href="/buynft">
             <div
               className="card discoveritemcards border_none bg-transparent"
               key={e.id}
@@ -50,6 +52,8 @@ export default function Discoveritemcards() {
                 </div>
               </div>
             </div>
+            </a>
+         
           </div>
         );
       })}

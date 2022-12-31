@@ -9,7 +9,6 @@ export default function Additem() {
                     <div className="col-lg-4 mt-5">
                         <p className='color_pencile'>PREVIEW</p>
                         <img src='https://snoozz.io/ver1/img/dummy-nft.jpg' className='w-100' />
-
                     </div>
                     <div className="col-lg-8 mt-5">
                         <form>
@@ -20,7 +19,6 @@ export default function Additem() {
                                     <input type="file" className="Snoozz_fn_button select_width shdow_green p-3 fwthin">
                                     </input>
                                 </div>
-
                             </div>
                             <div className="mb-3 mt-3">
                                 <label htmlFor="title" className="form-label color_pencile">Title</label>

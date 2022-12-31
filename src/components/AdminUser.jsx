@@ -22,8 +22,6 @@ export default function AdminUser() {
       <div className="container-fluied mx-5  mt-5">
                 <h2 className='color_pencile text-center mt-5'>Explore User List</h2>
                 <p className='color_pencile text-center'>Explore all collections on Snoozz marketplace.</p>
-               
-
                 <div className="mt-5">
                 <div className="card bg-transparent border_theme_1px text-center mt-3 gl_morph ">
                 <div className="card-header color_theme ">
@@ -44,9 +42,9 @@ export default function AdminUser() {
                             </tr>
                         </thead>
                         <tbody>
-                            {user.map((e) => {
+                            {user.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
-                               <td>{e.id}</td>
+                               <td>{index + 1}</td>
                                <td>{e.name}</td>
                                 <td>{e.uname}</td>
                                 <td>{e.email}</td>
@@ -59,7 +57,6 @@ export default function AdminUser() {
                                     <div className="d-flex justify-content-center">
                                     <button type="button" class="btn bg_theme mx-1"><a href='/viewuser'><i class="fa-solid fa-eye"></i></a></button>
                                     <button type="button" class="btn btn_squre_theeme mx-1">View Verification</button>
-
                                     </div>
                                 </td>
 

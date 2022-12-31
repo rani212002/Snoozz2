@@ -31,6 +31,7 @@ export default function ReferaalTable() {
                     <table className="table text-light text-start border-2 wsnwrap">
                         <thead>
                             <tr className='text-center'>
+                            <th>Sr No</th>
                             <th >Sponsor</th>
                             <th >Referral</th>
                             <th >Date	</th>
@@ -38,9 +39,9 @@ export default function ReferaalTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {referral.map((e) => {
+                            {referral.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
-                             
+                                <td>{index+1}</td>
                                 <td>{e.refer_by}</td>
                                 <td>{smallwalletaddress(e.wallet)}</td>
                                 <td>{smdate(e.created_at)}</td>

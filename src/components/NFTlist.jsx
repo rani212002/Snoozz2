@@ -28,6 +28,7 @@ export default function NFTlist() {
                     <table className="table text-light text-start border-2 wsnwrap">
                         <thead>
                             <tr className='text-center'>
+                              <th>Sr no</th>
                             <th >NFt</th>
                             <th >Price(SNOOZZ)</th>
                             <th >Royalty(%)	</th>
@@ -40,8 +41,9 @@ export default function NFTlist() {
                             </tr>
                         </thead>
                         <tbody>
-                            {nftlistdata.map((e) => {
+                            {nftlistdata.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
+                                <td>{index+1}</td>
                               <td>
                                     <div className="d-flex justify-content-center">
 

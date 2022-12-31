@@ -149,15 +149,16 @@ export default function Adminsetting() {
                     <table className="table text-light text-start border-2 wsnwrap">
                         <thead>
                             <tr className='text-center'>
-                           
+                           <th>Sr No</th>
                             <th >Percentage(%)	</th>
                             <th >Start Date</th>
                             <th >End Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {bonuspertable.map((e) => {
+                            {bonuspertable.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
+                                <td>{index+1}</td>
                                <td>{e.percentage}</td>
                                 <td>{e.from_date}</td>
                                 <td>{e.end_date}</td>

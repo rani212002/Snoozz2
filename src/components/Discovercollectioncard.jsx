@@ -26,7 +26,7 @@ export default function Discovercollectioncard() {
          {collnftdata.map((e) => {
         return (
           <div className="col-lg-4 col-md-6 col-12 mt-2">
-            <div className="card discovercollcard  bg-transparent" key={e.id}>
+            <div className="card discovercollcard  bg-transparent" key={e.id} >
                 <div className="row">
                     <div className='col-4'>
                         <img src='https://snoozz.io/ver1/img/profileimage/Profile.png' class="w-75 artist_img ms-2 mt-2" alt="..." />

@@ -76,9 +76,6 @@ function App() {
         <Route path="/viewuser" element={<Viewuser />}></Route>
         <Route path="/adduser" element={<Adduser />}></Route>
         <Route path="/adminverify" element={<Adminverify />}></Route>
-
-
-
       </Routes>
       <Footer />
     </>

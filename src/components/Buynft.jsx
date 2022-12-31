@@ -56,15 +56,15 @@ export default function Buynft() {
                   <ul className="list-group  bg-transparent border_none">
                     <li className="list-group-item bg-transparent border_none text-light">
                       <input className="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio" />
-                      <label className="form-check-label" for="firstRadio">First radio</label>
+                      <label className="form-check-label ms-2" for="firstRadio">4 %(For 3 Months)</label>
                     </li>
                     <li className="list-group-item  bg-transparent border_none text-light">
                       <input className="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="secondRadio" />
-                      <label className="form-check-label" for="secondRadio">Second radio</label>
+                      <label className="form-check-label ms-2" for="secondRadio">8 %(For 6 Months)</label>
                     </li>
                     <li className="list-group-item  bg-transparent border_none text-light">
                       <input className="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="thirdRadio" />
-                      <label className="form-check-label" for="thirdRadio">Third radio</label>
+                      <label className="form-check-label ms-2" for="thirdRadio">18 %(For 12 Months)</label>
                     </li>
                   </ul>
                   <div className="d-flex justify-content-center">

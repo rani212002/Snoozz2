@@ -28,19 +28,20 @@ export default function Adduser() {
             // console.log(countryData)
         });
     };
-    const adduser = async () => {
+    const submituser = async () => {
         userdata.user_id = userauth.id;
         const postData = userdata;
         console.log('userdata');
-        console.log(userdata);
+        // console.log(userdata);
         await axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'add-user',
+            url: process.env.REACT_APP_API_PATH + 'submit-user',
             data: postData,
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
                 setSuccess(res.data.message)
+                console.log(res.data)
 
             } else {
             }
@@ -54,6 +55,12 @@ export default function Adduser() {
             setSuccess("")
         });
     };
+    const closeMessage = (e) => {
+        if (e == 1) {
+            // setError("")
+            setSuccess("")
+        }
+    }
     const handleChange = ({ currentTarget: input }) => {
         setuserdata({ ...userdata, [input.name]: input.value })
         if (input.name == "") {
@@ -91,7 +98,12 @@ export default function Adduser() {
                         <div className="tab-content" id="nav-tabContent">
                             <div className="tab-pane  tab_pane fade show active" id="nav-personalsetting" role="tabpanel" aria-labelledby="nav-personalsetting-tab" tabIndex="0">
                                 <form>
-                                   
+                                {success != '' &&
+                                        <div className="alert alert-success alert-dismissible fade show">
+                                            <strong>Success!</strong> {success}
+                                            <button type="button" className="btn-close" onClick={() => closeMessage(1)} ></button>
+                                        </div>
+                                    }
                                     <div className="container p-5 select_container mt-5">
                                         <p className='color_theme text-center'> PNG, JPG, JPEG
                                             Height: 500, Width: 500</p>
@@ -103,20 +115,25 @@ export default function Adduser() {
                                     <div className="mb-3 mt-3">
                                         <label htmlFor="name" className="form-label color_pencile">Name</label>
                                         <input type="text" className="form-control bg-transparent border_theme_1px  color_theme p-2"  value={userdata.name} onChange={handleChange} placeholder='Name' name='name'  id="name" />
+                                        {errors && <span className="text-danger">{errors.name}</span>}
                                        
                                     </div>
                                     <div className="mb-3 mt-3">
-                                        <label htmlFor="username" className="form-label color_pencile">Username</label>
+                                        <label htmlFor="uname" className="form-label color_pencile">Username</label>
                                         <input type="text" className="form-control bg-transparent border_theme_1px  color_theme p-2" value={userdata.uname} onChange={handleChange} placeholder='Username' name='uname'  id="uname" />
+                                        {errors && <span className="text-danger">{errors.uname}</span>}
+
                                     </div>
                                     <div className="mb-3 mt-3">
                                         <label htmlFor="email" className="form-label color_pencile">E-mail</label>
                                         <input type="email" className="form-control bg-transparent border_theme_1px  color_theme p-2" value={userdata.email}  onChange={handleChange} placeholder='E-mail' name='email' aria-describedby="emailHelp"  id="email" />
+                                        {errors && <span className="text-danger">{errors.email}</span>}
 
                                     </div>
                                     <div className="mb-3 mt-3">
                                         <label htmlFor="wallet" className="form-label color_pencile">Wallet</label>
                                         <input type="wallet" className="form-control bg-transparent border_theme_1px  color_theme p-2" value={userdata.wallet} onChange={handleChange}  placeholder='wallet' name='wallet' aria-describedby="emailHelp"  id="email" />
+                                        {errors && <span className="text-danger">{errors.wallet}</span>}
 
                                     </div>
                                     <div className="mb-3 mt-3">
@@ -133,7 +150,7 @@ export default function Adduser() {
                                             })}
                                         </select>
                                     </div>
-                                    <button type='button' className="btn w-25 btn_submit"  onClick={() => adduser()}>
+                                    <button type='button' className="btn w-25 btn_submit"  onClick={() => submituser()}>
                                         Submit
                                     </button>
                                 </form>

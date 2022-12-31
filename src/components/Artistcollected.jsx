@@ -51,7 +51,6 @@ export default function Artistcollected() {
           </div>
         </div>
       </div>
-
       <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content black_one_bg border_theme_1px">

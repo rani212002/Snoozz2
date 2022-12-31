@@ -21,10 +21,6 @@ export default function Addcollection() {
                                     <label htmlfor="coverimg" class="form-label color_pencile">Cover Image(Image dimension 1400 x 400)</label>
                                     <input className="form-control bg-transparent border_theme_1px rounded inp_radius" type="file" id="coverimg" />
                                 </div>
-                                {/* <div className="mb-3 form-check">
-                                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                    <label className="form-check-label" htmlfor="exampleCheck1">Check me out</label>
-                                </div> */}
                                 <button type="submit" className="Snoozz_fn_button p-3 shdow_green mt-2">Submit</button>
                             </form>
                         </div>

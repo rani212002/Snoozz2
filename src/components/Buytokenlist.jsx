@@ -31,6 +31,7 @@ export default function Buytokenlist() {
                     <table className="table text-light text-start border-2 wsnwrap">
                         <thead>
                             <tr className='text-center'>
+                            <th>Sr</th>
                             <th >Date</th>
                             <th >Currency</th>
                             <th >Percentage(%)	</th>
@@ -43,8 +44,9 @@ export default function Buytokenlist() {
                             </tr>
                         </thead>
                         <tbody>
-                            {buytokendata.map((e) => {
+                            {buytokendata.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
+                                <td>{index+1}</td>
                                <td>{smdate(e.created_at)}</td>
                                 <td>{e.selected_coin}</td>
                                 <td>{e.per}</td>

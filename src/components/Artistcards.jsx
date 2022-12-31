@@ -44,11 +44,9 @@ export default function Artistcards() {
       setfollowstatus(res)
     });
     }
-    
     return (
         <>
      {artistData.map((e) => {
-        
         return <div className="col-xl-3 col-lg-4 col-md-6 col-12 mt-3">
         <div className="card  artist_card bg-transparent  h-100">
                 <div className="card-body ">
