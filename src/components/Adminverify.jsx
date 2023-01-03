@@ -6,6 +6,7 @@ import { get_user } from './allfun';
 export default function Adminverify() {
     const [success, setSuccess] = useState("")
     const [errors, setErrors] = useState([])
+    
     const [verify, setverify] = useState(
         {
             name: "",
@@ -15,35 +16,57 @@ export default function Adminverify() {
         }
     )
     const userauth = get_user()
-
- 
     useEffect(() => {
-      
-        const postData = { user_id: userauth.id };
+        const postData = { user_id: 2,id:2 };
         const response = axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'verification',
+            url: process.env.REACT_APP_API_PATH + 'admin-verification',
             data: postData
         }).then(async function (response) {
-            const res = await response.data.data;
-            console.log(res.verification)
+            const res = await response;
+            console.log(res)
             setverify(res.verification)
         });
     }, []);
 
-    const submitVerification = async () => {
-        verify.user_id = userauth.id;
-        const postData = verify;
+    const approveverification = async () => {
+        const postData ={ user_id:2}
         await axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'submit-verify',
+            url: process.env.REACT_APP_API_PATH + 'approve',
             data: postData,
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
                 setSuccess(res.data.message)
-                console.log(res.data.message)
+                console.log("approve")
+                console.log(res)
+            } else {
+                setErrors(errors)
+            }
+        }).catch((err) => {
+
+            const errors = err.response.data.data;
+            console.log(errors)
+            setErrors(errors)
+            console.log('errors')
+            console.log(errors)
+            setSuccess("")
+        });
+    }; 
+    const disverification = async () => {
+        const postData ={ user_id:2}
+        await axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            url: process.env.REACT_APP_API_PATH + 'dis-approve',
+            data: postData,
+        }).then(function (res) {
+            if (res.data.success && res.data.success == 1) {
+                setSuccess(res)
+                console.log("disapprove")
+                console.log(res.data)
             } else {
                 setErrors(errors)
             }
@@ -59,7 +82,7 @@ export default function Adminverify() {
     };
     const closeMessage=(e) => {
 		if (e == 1) {
-			// setError("")
+			setErrors("")
 			setSuccess("")
 		}
 	}
@@ -92,39 +115,37 @@ export default function Adminverify() {
 								</div>
 							}
 
-					    	{/* {errors != '' &&
+					    	{errors != '' &&
 					    		<div className="alert alert-danger alert-dismissible fade show">
 								    <strong>Error!</strong> {errors}
 								    <button type="button" className="btn-close" onClick={() => closeMessage(1)} ></button>
 								</div>
-							} */}
-					        	
-                                
+							} 
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label color_pencile">Name</label>
-                                    <input type="text" name="name" className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded"  value={verify.name} onChange={handleChange}  placeholder='Your Name' id="name" />
+                                    <input type="text" name="name" className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded"   onChange={handleChange}  placeholder='Your Name' id="name" />
                                     {errors && <span className="text-danger">{errors.name}</span>}
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="e-mail" className="form-label color_pencile">Email</label>
-                                    <input type="email"  name="email"className="form-control bg-transparent border_theme_1px inp_radius color_theme input rounded" value={verify.email}   onChange={handleChange}  placeholder='youremail@gmail.com' id="e-mail" />
+                                    <label htmlFor="email" className="form-label color_pencile">Email</label>
+                                    <input type="email"  name="email"className="form-control bg-transparent border_theme_1px inp_radius color_theme input rounded"    onChange={handleChange}  placeholder='youremail@gmail.com' id="e-mail" />
                                     {errors && <span className="text-danger">{errors.email}</span>}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="twitter" className="form-label color_pencile">Twitter</label>
-                                    <input type="text" name='twitter' className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded" value={verify.twitter}   onChange={handleChange}  id="collection" placeholder='Your Twitter' />
+                                    <input type="text" name='twitter' className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded"   onChange={handleChange}  id="collection" placeholder='Your Twitter' />
                                     {errors && <span className="text-danger">{errors.twitter}</span>}
 
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="username" className="form-label color_pencile">Coin Market Cap Username</label>
-                                    <input type="text" name='username' className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded" value={verify.username}   onChange={handleChange}  placeholder='Your coinmarket cap username' id="collection" />
+                                    <input type="text" name='username' className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded"    onChange={handleChange}  placeholder='Your coinmarket cap username' id="collection" />
                                     {errors && <span className="text-danger">{errors.username}</span>}
                                     
                                 </div>
                                 <div className="d-flex justify-content-center">
-                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3 mx-2" onClick={() => submitVerification()}>Approve</button>
-                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitVerification()}>DisApprove</button>
+                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3 mx-2" onClick={() => approveverification()}>Approve</button>
+                                <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => disverification()}>DisApprove</button>
                                 </div>
                             </form>
                         </div>

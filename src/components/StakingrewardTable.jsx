@@ -7,7 +7,7 @@ export default function StakingrewardTable() {
         const response =axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'staking-reward',
+            url: process.env.REACT_APP_API_PATH + 'staking-rewards',
           }).then(async function (response) {
             const res = await response.data.data;
             console.log("hdhdhddh")
@@ -40,7 +40,7 @@ export default function StakingrewardTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {stakingrewarddata.map((e) => {
+                            {/* {stakingrewarddata.map((e) => {
                               return<tr key = {e.id} className='text-center'>
                                <td>{e.created_at}</td>
                                 <td>{e.selected_coin}</td>
@@ -51,7 +51,7 @@ export default function StakingrewardTable() {
                                 <td>{e.tokens}</td>
                                 <td>{e.token_price}</td>
                             </tr>
-                          })}
+                          })} */}
                          
                         </tbody>
                     </table>

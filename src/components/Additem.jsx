@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../css/additem.css'
 import accrord from '../img/accordian_side.png'
 export default function Additem() {
+
+    const [data,setdata] = useState([])
+    
+
+
     return (
         <>
             <div className="container">

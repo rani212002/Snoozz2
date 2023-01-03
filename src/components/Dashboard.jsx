@@ -48,29 +48,29 @@ export default function Dashboard() {
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Pre Sale Token Balance</h6>
-                                <p className='color_theme'>$0.0222</p>
+                                <p className='color_theme'>{dashboard.token_wallet}</p>
                             </div>
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>NFT Wallet</h6>
-                                <p className='color_theme'>$0.0222</p>
+                                <p className='color_theme'>{dashboard.reward_wallet}</p>
                             </div>
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Staking Rewards</h6>
                                 <p className='color_theme'>$0.0222</p>
                             </div>
-                            <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
+                            {/* <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Bounty Balanace</h6>
                                 <p className='color_theme'>$0.0222</p>
-                            </div>
-                            <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
+                            </div> */}
+                            {/* <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>
                                     Referral Rewards</h6>
                                 <p className='color_theme'>{dashboard.reward_wallet}</p>
-                            </div>
+                            </div> */}
                             <div className="col-sm-5 mt-2 h-100  border_theme_1px p-2 text-center pricecard">
                                 <i class="fa-sharp fa-solid fa-clock color_theme "></i>
                                 <h6 className='color_pencile text-center'>Your Referrals</h6>

@@ -5,10 +5,13 @@ import bnb from '../img/bnb.png'
 import trc from '../img/trc_20.png'
 
 
+
 export default function Buytokenmain() {
     useEffect(() => {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+      
     })
     return (
         <>
@@ -71,6 +74,7 @@ export default function Buytokenmain() {
                                         <li><a className="dropdown-item color_theme d-flex" href="#"><div><img src={eth} className="coin_image"></img></div><div><p className='mt-1'>ETH</p></div></a></li>
                                         <li><a className="dropdown-item color_theme d-flex" href="#"><div><img src={trc} className="coin_image"></img></div><div><p className='mt-1'>BNB</p></div></a></li>
                                     </ul>
+                                   
                                 </div>
 
                             </div>

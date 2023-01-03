@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 function SwiperCard(props) {
-
   return (
     <>
       <div class="card bg-transparent listing_cards">
@@ -17,5 +16,4 @@ function SwiperCard(props) {
     </>
   )
 }
-
 export default SwiperCard;

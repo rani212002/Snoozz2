@@ -11,7 +11,7 @@ export default function Usercollection() {
   const [userdata, setuserdata] = useState([]);
   const userauth = get_user()
   useEffect(() => {
-    const postData = {use_id:2,id:2}
+    const postData = {user_id:2,id:2}
     const response = axios({
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -68,12 +68,9 @@ export default function Usercollection() {
                                             <li><a className="dropdown-item dd_text" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Share</a></li>
                                             <li><a className="dropdown-item dd_text" href="#">Another action</a></li>
                                         </ul>
-
                                     </div>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

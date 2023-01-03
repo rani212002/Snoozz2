@@ -17,7 +17,7 @@ export default function Adminsetting() {
             sdate: "",
             edate: "",
             srvcfees: "",
-            // rewardpercentage:"",
+            rewardpercentage:"",
             twitter:"twitter",  
         }
     )
@@ -54,6 +54,7 @@ export default function Adminsetting() {
             // data: postData,
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
+                // setsetting(res)
                 setSuccess(res.data.message)
                 console.log(res)
             } else {
@@ -99,21 +100,21 @@ export default function Adminsetting() {
 
                                 <div className="mb-3">
                                     <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
-                                    <input type="number" name="bper" value={setting.bonus_percentages} onChange={handleChange} className="form-control text-dark" id="bonuspercentage" />
+                                    <input type="number" name="bper" value={setting.bonus_percentages} onChange={handleChange} className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="sdate" className="form-label color_theme">Start Date</label>
-                                    <input type="date" name="sdate" value={setting.bonus_fdates} onChange={handleChange} className="form-control text-dark " id="sdate" />
+                                    <input type="date" name="sdate" value={setting.bonus_fdates} onChange={handleChange} className="form-control text-dark input " id="sdate" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edate" className="form-label color_theme">End Date</label>
-                                    <input type="date" name="edate"  value={setting.bonus_edates} onChange={handleChange} className="form-control text-dark " id="edate" />
+                                    <input type="date" name="edate"  value={setting.bonus_edates} onChange={handleChange} className="form-control text-dark input " id="edate" />
                                 </div>
                             </div>
                             <div className="border_theme_1px p-3 rounded mt-2">
                                 <div className="mb-3">
                                     <label htmlFor="number" className="form-label color_theme">Service Fees Percentage</label>
-                                    <input type="number" className="form-control text-dark" value={setting.srvcfees} onChange={handleChange} name="srvcfees" id="servicep" />
+                                    <input type="number" className="form-control text-dark input" value={setting.srvcfees} onChange={handleChange} name="srvcfees" id="servicep" />
                                 </div>
                             </div>
 
@@ -123,14 +124,12 @@ export default function Adminsetting() {
                                 <label htmlFor="edate" className="form-label color_theme">Reward Percentage</label>
                                 {rewardper.map((e)=>{
                                     return <div className="mb-2" key={e.id}>
-                                    <input type="number" value={e.per}  name="rewardpercentage" className="form-control text-dark" id="bonuspercentage" />
+                                    <input type="number" value={e.per}  name="rewardpercentage" className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 })
-
                                 }
-                              
                                 <label htmlFor="floatingTextarea2" name="twitter_post" className="form-label color_theme">Twitter Post</label>
-                                <textarea className="form-control text-dark" value={setting.twitter_post} name="twitter" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
+                                <textarea className="form-control text-dark input" value={setting.twitter_post} name="twitter" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
                             </div>
                             <div className="d-flex justify-content-center">
 

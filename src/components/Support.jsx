@@ -14,8 +14,6 @@ export default function Support() {
     
 
     const [errors, setErrors] = useState()
-
-
     const userauth = get_user()
     const getsupport = () =>{
         const postData = { user_id: 2};
@@ -107,7 +105,6 @@ export default function Support() {
                             {getsupportdata.map((e,index) => {
                               return<tr key = {e.id} className='text-center'>
                                 <td>{index+1}</td>
-
                                <td>{smdate(e.created_at)}</td>
                                 <td>{e.ticketNo}</td>
                                 <td>{e.subject}</td>

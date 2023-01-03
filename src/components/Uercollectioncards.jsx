@@ -11,14 +11,11 @@ export default function Uercollectioncards() {
     <>
        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
             <div
-              className="card discoveritemcards border_none bg-transparent"
-            
-            >
+              className="card discoveritemcards border_none bg-transparent">
               <img
                 src="https://gateway.pinata.cloud/ipfs//bafkreia45xaqia5kfjep5oa44e35v6uw2btnmzyzljwy42xrubrww73vla"
                 className="w-100 rounded position-relative"
-                alt="..."
-              />
+                alt="..."/>
               <span class="badge black_one_bg position-absolute like_btn">
                 <i type="button" class="fa-solid fa-heart fa-2x text-light"></i>
               </span>

@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import axios from 'axios'
 import Profiletabs from './Profiletabs'
 import '../css/profile.css'
-import { errors } from 'ethers';
 import { get_user } from './allfun';
 
 export default function Profile() {
@@ -13,7 +12,6 @@ export default function Profile() {
     const [success, setSuccess] = useState("")
     const [errors, setErrors] = useState([])
     const userauth = get_user()
-
     const [profiledata, setprofiledata] = useState(
         {
             name: "",
@@ -37,7 +35,7 @@ export default function Profile() {
     };
     //getprofile
     const getProfile = async () => {
-        const postData = { user_id: userauth.id };
+        const postData = { user_id: 2 };
         console.log(userauth.id)
         const response = axios({
             method: 'POST',
