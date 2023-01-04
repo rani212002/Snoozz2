@@ -7,8 +7,11 @@ import { get_user } from './allfun';
 
 export default function Profile() {
     const [countrydata, setcountryData] = useState([])
-
-    const [userid, setuserid] = useState()
+    const [pic, setpic] = useState(
+        {
+            image: "",
+        }
+    )
     const [success, setSuccess] = useState("")
     const [errors, setErrors] = useState([])
     const userauth = get_user()
@@ -20,22 +23,9 @@ export default function Profile() {
             country: ""
         }
     )
-
-    //get country
-    const getcountry = async () => {
-        const response = axios({
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'profile'
-        }).then(async function (response) {
-            const res = await response.data.data;
-            setcountryData(res.countries)
-            console.log(countrydata)
-        });
-    };
     //getprofile
     const getProfile = async () => {
-        const postData = { user_id: 2 };
+        const postData = { user_id: userauth.id };
         console.log(userauth.id)
         const response = axios({
             method: 'POST',
@@ -44,10 +34,15 @@ export default function Profile() {
             data: postData
         }).then(async function (response) {
             const res = await response.data.data;
-            res.user_details.country = res.profile.country
+            if(res.profile && res.profile.country) {
+                res.user_details.country = res.profile.country
+            } else {
+                res.user_details.country = ''
+            }
+            setcountryData(res.countries)
             setprofiledata(res.user_details)
-            console.log('profiledata')
-            console.log(profiledata)
+            console.log('res.user_details')
+            console.log(res.user_details)
         });
     };
     //updateprofile
@@ -65,7 +60,6 @@ export default function Profile() {
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
                 setSuccess(res.data.message)
-
             } else {
             }
         }).catch((err) => {
@@ -76,6 +70,34 @@ export default function Profile() {
             console.log('errors')
             console.log(errors)
             setSuccess("")
+        });
+
+        // set profile image
+
+        const formData = new FormData();
+        console.log("pic.image")
+        console.log(pic.image)
+        formData.append("image", pic.image);
+        formData.append("user_id", userauth.id);
+        console.log("formData")
+        console.log(formData)
+        await axios({
+            method: 'POST',
+            url: process.env.REACT_APP_API_PATH + 'submit-profile-pic',
+            data: formData,
+        }).then(function (res) {
+            if (res.data.success && res.data.success == 1) {
+                console.log('res')
+                console.log(res)
+            } else {
+            }
+            console.log(res)
+        }).catch((err) => {
+
+            const errors = err.response;
+            console.log(errors)
+            console.log('errors')
+            console.log(errors)
         });
     };
     const closeMessage = (e) => {
@@ -95,11 +117,25 @@ export default function Profile() {
         } else {
             setErrors({ ...errors, [input.name]: false })
         }
+        
     }
+
+    var handleimage = function (event) 
+    {
+      var images = document.getElementById("pic");
+      images.src =URL.createObjectURL(event.target.files[0]);
+      setpic({
+        image:event.target.files[0]
+      })
+    };
+    console.log("image outside")
+    console.log(pic.image)
+
     useEffect(() => {
         getProfile()
-        getcountry()
+        // getcountry()
     }, []);
+
     return (
         <>
             <div className="container mt-5">
@@ -108,7 +144,7 @@ export default function Profile() {
                         <div className="card bg-transparent border_none w-100">
                             <div className="card-body">
                                 <div className="d-flex justify-content-center">
-                                    <img src="https://snoozz.io/ver1/img/profileimage/Profile.png" className="w-75 artist_img" alt="..." />
+                                    <img src="https://snoozz.io/ver1/img/profileimage/Profile.png" id='pic' className="w-75 artist_img" alt="..." />
                                 </div>
                             </div>
                         </div>
@@ -133,7 +169,7 @@ export default function Profile() {
                                         <p className='color_theme text-center'> PNG, JPG, JPEG
                                             Height: 500, Width: 500</p>
                                         <div className='d-flex justify-content-center'>
-                                            <input type="file" className="Snoozz_fn_button select_width shdow_green p-3 fwthin">
+                                            <input type="file" className="Snoozz_fn_button select_width shdow_green p-3 fwthin" id='profile_img'  onChange={handleimage}>
                                             </input>
                                         </div>
                                     </div>
@@ -159,8 +195,8 @@ export default function Profile() {
                                         <select className="form-select bg-transparent border_theme_1px  color_theme p-2" value={profiledata.country} name='country' onChange={handleChange} aria-label="Default select example">
 
                                             {countrydata.map((e) => {
-                                                if (profiledata == e.name) {
-                                                    return <option key={e.id} defaultValue className="bg-dark">{e.name}</option>
+                                                if (profiledata.country == e.name) {
+                                                    return <option className="bg-dark">{e.name}</option>
                                                 } else {
                                                     return <option key={e.id} className="bg-dark">{e.name}</option>
                                                 }

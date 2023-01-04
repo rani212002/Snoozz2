@@ -16,9 +16,7 @@ export default function Verify() {
     )
     const userauth = get_user()
 
- 
-    useEffect(() => {
-      
+    const getverify = async () => {
         const postData = { user_id: userauth.id };
         const response = axios({
             method: 'POST',
@@ -27,11 +25,21 @@ export default function Verify() {
             data: postData
         }).then(async function (response) {
             const res = await response.data.data;
-            console.log(res.verification)
-            setverify(res.verification)
+            console.log(res)
+            if(res.verification == null)
+            {
+               res.verification.name = ""
+               res.verification.email = ""
+               res.verification.twitter = ""
+               res.verification.username = ""
+            }
+            else
+            {
+                setverify(res.verification)
+            }
         });
-    }, []);
-
+    };
+    
     const submitVerification = async () => {
         verify.user_id = userauth.id;
         const postData = verify;
@@ -46,12 +54,12 @@ export default function Verify() {
                 console.log("onsubmitdata")
                 console.log(res.data.data.verification_data)
                 setverify(res.data.data.verification_data)
-             
+                
             } else {
                 setErrors(errors)
             }
         }).catch((err) => {
-
+            
             const errors = err.response.data.data;
             console.log(errors)
             setErrors(errors)
@@ -61,14 +69,14 @@ export default function Verify() {
         });
     };
     const closeMessage=(e) => {
-		if (e == 1) {
-			// setError("")
+        if (e == 1) {
+            // setError("")
 			setSuccess("")
 		}
 	}
     const handleChange = ({ currentTarget: input }) => {
         setverify({ ...verify, [input.name]: input.value })
-
+        
         if (input.name == "") {
             setErrors([])
         }
@@ -78,7 +86,11 @@ export default function Verify() {
             // setErrors({ ...errors, [input.name]: false })
         }
     }
-
+    useEffect(() => {
+        getverify()
+        // getcountry()
+    }, []);
+    
     return (
         <>
             <div className="container-fluied  mt-5">
@@ -99,6 +111,7 @@ export default function Verify() {
                                     <input type="text" name="name" className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded"  value={verify.name} onChange={handleChange}  placeholder='Your Name' id="name" />
                                     {errors && <span className="text-danger">{errors.name}</span>}
                                 </div>
+                          
                                 <div className="mb-3">
                                     <label htmlFor="e-mail" className="form-label color_pencile">Email</label>
                                     <input type="email"  name="email"className="form-control bg-transparent border_theme_1px inp_radius color_theme input rounded" value={verify.email}   onChange={handleChange}  placeholder='youremail@gmail.com' id="e-mail" />
