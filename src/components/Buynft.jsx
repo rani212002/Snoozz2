@@ -1,7 +1,71 @@
 import React from 'react'
+import { useState ,useEffect} from 'react';
+import axios from 'axios';
 import '../css/buynft.css'
+import SwiperCard from './SwiperCard'
+import Slider from "react-slick";
+import listing from './DataJson'
+import Discoveritemcards from './Discoveritemcards';
+import Buynftdicitem from './Buynftdicitem'
+import { get_user } from './allfun';
 
-export default function Buynft() {
+export default function Buynft(props) {
+  var settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    initialSlide: 0,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }
+    ]
+};
+const [nftdata, setNftdata] = useState([]);
+useEffect(() => {
+  const response = axios({
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    url: process.env.REACT_APP_API_PATH + "nft",
+  }).then(async function (response) {
+    const res = await response.data.data;
+    console.log("hdhdhddh");
+    console.log(res.nfts);
+    setNftdata(res.nfts);
+  });
+}, []);
+const sliderListingData = nftdata.map((e) => {
+    return (
+        < Buynftdicitem
+            key={e.key}
+            hash_id={e.hash_id}
+            content={e.desc}
+        />
+    )
+})
   return (
     <>
       <div className="container">
@@ -11,6 +75,7 @@ export default function Buynft() {
               className="card discoveritemcards border_none bg-transparent">
               <img
                 src="https://gateway.pinata.cloud/ipfs//bafkreia45xaqia5kfjep5oa44e35v6uw2btnmzyzljwy42xrubrww73vla"
+                // src="https://gateway.pinata.cloud/ipfs//bafkreia45xaqia5kfjep5oa44e35v6uw2btnmzyzljwy42xrubrww73vla"
                 className="w-100 rounded position-relative"
                 alt="..."
               />
@@ -379,6 +444,14 @@ export default function Buynft() {
                 </div>
               </div>
             </div>
+        </div>
+
+        <h3 className='color_pencile mt-5'>More Items From Collection</h3>
+        <div className="row">
+
+        <Slider {...settings}>
+                        {sliderListingData}
+                    </Slider>
         </div>
       </div>
     </>

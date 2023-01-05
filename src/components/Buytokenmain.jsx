@@ -12,14 +12,11 @@ export default function Buytokenmain() {
     useEffect(() => {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
-      
     })
     const [buytoken , setbuytoken] = useState([])
-    const [coin,setcoin] = useState("select coin")
+    const [coin,setcoin] = useState()
     const usersauth = get_user()
     useEffect(()=>{
-      
         const postData = { user_id: 2,id:2};
         const response =  axios({
             method: 'POST',
@@ -32,16 +29,96 @@ export default function Buytokenmain() {
               console.log(res)
               setbuytoken(res)
             });
-            
     }, [])
+    const getcoin = async (e) => {
+        await axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            url: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BNB,USDT,ETH&tsyms=USD&api_key=1441933b04b3be0a07c3007578213370dabed7c1f55e8ba29c027cbb67415a57',
+        }).then(function (res) {
+            console.log(res.data)
+            const price_table_json = res.data;
+            const price_table_json_BNB = price_table_json.BNB.USD;
+            const price_table_json_USDT = price_table_json.USDT.USD;
+            const price_table_json_ETH = price_table_json.ETH.USD;
+            localStorage.setItem('price_table_json_BNB', price_table_json_BNB);
+            localStorage.setItem('price_table_json_USDT', price_table_json_USDT);
+            localStorage.setItem('price_table_json_ETH', price_table_json_ETH);
+                // localStorage.setItem('per', per);
+                localStorage.setItem('check', 0);
+                localStorage.setItem('conv_coin', 'BNB');
+                localStorage.setItem('coin_dlr_price', price_table_json_BNB);
+                localStorage.removeItem('conv_coin_price');
+        }).catch((err) => {
+            const errors = err.response;
+            console.log(errors)
+            console.log('errors')
+            console.log(errors)
+        });
+    };
+    $(".conv-coin").click(function () {
+        var this_id = $(this).attr('id');
+        $(".conv-coin").children('a').removeClass('active');
+        $(this).children('a').addClass('active');
+        var conv_coin = this_id.replace("active-", "");
+        $("#conv-value").html(conv_coin);
+        localStorage.setItem('coin_dlr_price', localStorage.getItem('price_table_json_' + conv_coin));
+        localStorage.setItem('conv_coin', conv_coin);
+        $(".coin-two-price").keyup();
+    });
+
+const inptwo = (e)=>{
+    var conv_coin = localStorage.getItem('conv_coin');
+    if (!conv_coin) {
+        alert("Error!", "Please select coin!", "error");
+        return false;
+    }
+    var conv_coin_price =$(".coin-two-price").val();
+    var coin_dlr_price = localStorage.getItem('coin_dlr_price');
+    
+    var coin_one_price = conv_coin_price * coin_dlr_price;
+    coin_one_price = coin_one_price.toFixed(2);
+    var total_amt_conv_coin = (conv_coin_price / coin_dlr_price).toFixed(2);
+    $(".coin-one-price").val(total_amt_conv_coin);
+    localStorage.setItem('total_amt_conv_coin', total_amt_conv_coin);
+    localStorage.setItem('conv_coin_price', conv_coin_price);
+    localStorage.setItem('coin_one_price', total_amt_conv_coin);
+    var per = localStorage.getItem('per');
+    gettokens(conv_coin_price, per)
+}
+function gettokens(amount, per) {
+    if (amount >= 0) {
+        $.ajax({
+            url: process.env.REACT_APP_API_PATH + "gettokens",
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'JSON',
+            data: {
+                amount: amount,
+                per: per,
+            },
+            success: function (response) {
+                var total_amount = (response.total_tokens + response.bonus_tokens).toFixed(2);
+                $(".tokens").html('Total Tokens = ' + response.total_tokens + ' + Bonus Tokens = ' +
+                    response.bonus_tokens);
+                $(".bonus-tokens").html(total_amount);
+                localStorage.setItem('tokens', total_amount);
+                localStorage.setItem('bonus_tokens', total_amount);
+            }
+        });
+    }
+}
+
 
 function handlechange(e) {
-
     setcoin(e)
     console.log(e)
-
-
 }
+useEffect(()=>{
+    getcoin()
+},[])
     return (
         <>
             <div className="border_theme_1px text-center rounded">
@@ -56,7 +133,6 @@ function handlechange(e) {
                         </div>
                         <div>
                             <i className="fa-solid fa-info bg_theme p-1 rounded"></i>
-
                         </div>
                     </div>
                     <div className="progress">
@@ -92,12 +168,12 @@ function handlechange(e) {
                         <p className='text-light p-2'>{buytoken.per}% bonus end in:</p>
                         <div className="row mx-1">
                             <div className="col-6 p-2">
-                                <input type="text" className="form-control text-dark" aria-label=".." />
+                                <input type="number" className="form-control text-dark coin-two-price"  aria-label=".." onKeyUp={inptwo} />
                             </div>
                             <div className="col-6 p-2">
                                 <div className="input-group mb-3">
-                                    <input type="text" className="form-control text-dark" aria-label="Text input with dropdown button" />
-                                    <button className="btn btn-outline-secondary dropdown-toggle"  id='coinmain' type="button" data-bs-toggle="dropdown" aria-expanded="false">{coin}</button>
+                                    <input type="text" className="form-control text-dark coin-one-price btn_inp"  aria-label="Text input with dropdown button" />
+                                    <button className="btn btn-outline-secondary dropdown-toggle"  id="conv-value" type="button" data-bs-toggle="dropdown" aria-expanded="false">{coin}</button>
                                     <ul className="dropdown-menu dropdown-menu-end">
                                         <li onClick={
                                             e=>
@@ -105,21 +181,21 @@ function handlechange(e) {
                                                 e.preventDefault();
                                             handlechange('BNB')
                                             }
-                                            }><a className="dropdown-item color_theme d-flex coin" href="#"><div><img src={bnb} className="coin_image"></img></div><div><p className='mt-1'>BNB</p></div></a></li>
+                                            } id="active-BNB" class="conv-coin"><a className="dropdown-item color_theme d-flex coin" href="#"><div><img src={bnb} className="coin_image"></img></div><div><p className='mt-1'>BNB</p></div></a></li>
                                         <li onClick={
                                             e=>
                                             {
                                                 e.preventDefault();
                                             handlechange('ETH')
                                             }
-                                            }><a className="dropdown-item color_theme d-flex coin" href="#"><div><img src={eth} className="coin_image"></img></div><div><p className='mt-1'>ETH</p></div></a></li>
+                                            } class="conv-coin" id="active-USDT"><a className="dropdown-item color_theme d-flex coin" href="#"><div><img src={eth} className="coin_image"></img></div><div><p className='mt-1'>ETH</p></div></a></li>
                                         <li onClick={
                                             e=>
                                             {
                                                 e.preventDefault();
                                             handlechange('TRC')
                                             }
-                                            }><a className="dropdown-item color_theme d-flex coin"  href="#"><div><img src={trc} className="coin_image"></img></div><div><p className='mt-1'>TRC</p></div></a></li>
+                                            } class="conv-coin" id="active-ETH"><a className="dropdown-item color_theme d-flex coin"  href="#"><div><img src={trc} className="coin_image"></img></div><div><p className='mt-1'>TRC</p></div></a></li>
                                     </ul>
                                    
                                 </div>

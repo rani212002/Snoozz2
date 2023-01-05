@@ -19,7 +19,6 @@ export default function Addcollection() {
     const handleChange = (e) => {
         e.preventDefault()
         setdata({
-            // colname: e.target.name.value,
             image: e.target.files[0],
             cover: e.target.files[0]
         });
@@ -30,14 +29,12 @@ export default function Addcollection() {
             colname: e.target.value,
         });
     }
-    console.log(collname.colname)
 
     const submitProfile = async (e) => {
 
         e.preventDefault();
         console.log(data)
         console.log(collname.colname)
-
         const formData = new FormData();
         formData.append("name", collname.colname);
         formData.append("cover", data.cover);

@@ -2,6 +2,7 @@
 import { useState,useEffect } from 'react'; 
 import React from 'react'
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import {get_user} from '../components/allfun.js'
 
 
@@ -23,8 +24,10 @@ export default function Discovercollectioncard() {
     }, []);
     return (
         <>
-         {collnftdata.map((e) => {
+         {collnftdata.map((e) => {  
         return (
+          <>
+          <Link to="/usercollection">
           <div className="col-lg-4 col-md-6 col-12 mt-2">
             <div className="card discovercollcard  bg-transparent" key={e.id} >
                 <div className="row">
@@ -44,6 +47,8 @@ export default function Discovercollectioncard() {
                 </div>
             </div>
           </div>
+          </Link>
+          </>
         );
       })}
         </>

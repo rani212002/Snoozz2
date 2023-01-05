@@ -25,8 +25,8 @@ export default function Profile() {
     )
     //getprofile
     const getProfile = async () => {
-        const postData = { user_id: userauth.id };
-        console.log(userauth.id)
+        const postData = { user_id: 63 };
+        console.log(63)
         const response = axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -48,7 +48,7 @@ export default function Profile() {
     //updateprofile
 
     const submitProfile = async () => {
-        profiledata.user_id = userauth.id;
+        profiledata.user_id = 63;
         const postData = profiledata;
         console.log('profiledata');
         console.log(profiledata);
@@ -78,7 +78,7 @@ export default function Profile() {
         console.log("pic.image")
         console.log(pic.image)
         formData.append("image", pic.image);
-        formData.append("user_id", userauth.id);
+        formData.append("user_id", 63);
         console.log("formData")
         console.log(formData)
         await axios({

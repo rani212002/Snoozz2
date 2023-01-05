@@ -39,7 +39,7 @@ export default function Referaal(props) {
 
         }
     }
-
+ 
     return (
         <>
             <div className="container-fluied">
@@ -51,7 +51,7 @@ export default function Referaal(props) {
                         <p className='color_pencile'>Referaal Link:</p>
                         <div className="input-group flex-nowrap w-75">
                             <input type="text" class="form-control text-dark" placeholder="Referaal" aria-label="Referaal" aria-describedby="addon-wrapping" />
-                            <span className="input-group-text bg-light border_none" id="addon-wrapping"><i class="fa-solid fa-copy color_theme"></i></span>
+                            <span className="input-group-text bg-light border_none" id="addon-wrapping"><i type="button" class="fa-solid fa-copy color_theme"></i></span>
                         </div>
                     </div>
                     <div className="col-lg-6 order-lg-2 order-1">
