@@ -5,11 +5,11 @@ export default function Buynftdicitem(props) {
   
   return (
     <div className='mx-2'>
-      <Link to="/buynft">
+    
             <div
               className="card discoveritemcards border_none bg-transparent"
               key={props.id}
-            >
+            > 
               <img
                 src={process.env.REACT_APP_CLOUD_IMG + props.hash_id}
                 className="w-100 rounded position-relative"
@@ -34,7 +34,7 @@ export default function Buynftdicitem(props) {
                 </div>
               </div>
             </div>
-            </Link>
+
     </div>
   )
 }

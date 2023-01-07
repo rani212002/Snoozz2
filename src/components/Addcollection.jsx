@@ -6,7 +6,6 @@ export default function Addcollection() {
     const userauth = get_user()
     const [data, setdata] = useState(
         {
-
             image: "",
             cover: ""
         }

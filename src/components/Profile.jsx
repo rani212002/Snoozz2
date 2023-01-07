@@ -25,7 +25,7 @@ export default function Profile() {
     )
     //getprofile
     const getProfile = async () => {
-        const postData = { user_id: 63 };
+        const postData = { user_id: 69 };
         console.log(63)
         const response = axios({
             method: 'POST',
@@ -34,21 +34,28 @@ export default function Profile() {
             data: postData
         }).then(async function (response) {
             const res = await response.data.data;
+            console.log('res')
+            console.log(res)
             if(res.profile && res.profile.country) {
                 res.user_details.country = res.profile.country
-            } else {
-                res.user_details.country = ''
+            } else if(res.profile == "") 
+            {
+                res.user_details.country = res.countries
             }
+            // console.log(res.country)
             setcountryData(res.countries)
-            setprofiledata(res.user_details)
-            console.log('res.user_details')
-            console.log(res.user_details)
+            if(res.user_details) {
+                setprofiledata(res.user_details)
+            }
+
+            // console.log('res.user_details')
+            // console.log(res.user_details)
         });
     };
     //updateprofile
 
     const submitProfile = async () => {
-        profiledata.user_id = 63;
+        profiledata.user_id = 69;
         const postData = profiledata;
         console.log('profiledata');
         console.log(profiledata);
@@ -60,7 +67,7 @@ export default function Profile() {
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
                 setSuccess(res.data.message)
-            } else {
+            } else  {
             }
         }).catch((err) => {
 
@@ -77,8 +84,8 @@ export default function Profile() {
         const formData = new FormData();
         console.log("pic.image")
         console.log(pic.image)
-        formData.append("image", pic.image);
-        formData.append("user_id", 63);
+        formData.append("profile-pic", pic.image);
+        formData.append("user_id", 69);
         console.log("formData")
         console.log(formData)
         await axios({

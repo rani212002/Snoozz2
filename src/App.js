@@ -65,7 +65,7 @@ function App() {
         <Route path="/artist-collected" element={<Artistcollected />}></Route>
         <Route path="/usercollection" element={<Usercollection />}></Route>
         <Route path="/support" element={<Support />}></Route>
-        <Route path="/buynft" element={<Buynft />}></Route>
+        <Route path="/buynft/:id" element={<Buynft />}></Route>
         <Route path="/likecol" element={<LikeCol />}></Route>
         <Route path="/likecol" element={<LikeCol />}></Route>
 

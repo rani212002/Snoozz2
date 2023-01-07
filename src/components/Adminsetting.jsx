@@ -44,7 +44,6 @@ export default function Adminsetting() {
     }, []);
 
     const submitsetting = async () => {
-        
         setting.user_id = userauth.id;
         // const postData = setting;
         await axios({
@@ -76,17 +75,18 @@ export default function Adminsetting() {
 			setSuccess("")
 		}
 	}
-    const handleChange = ({ currentTarget: input }) => {
-        setsetting({ ...setting, [input.name]: input.value })
+    const handleChange = (e) => {
+        console.log(e.target.value)
+        setsetting({ ...setting, [e.name]: e.value })
 
-        if (input.name == "") {
-            setErrors([])
-        }
-        if (input.value == '') {
-            setErrors({ ...errors, [input.name]: input.placeholder + ' is required!' })
-        } else {
-            // setErrors({ ...errors, [input.name]: false })
-        }
+        // if (e.name == "") {
+        //     setErrors([])
+        // }
+        // if (e.value == '') {
+        //     setErrors({ ...errors, [e.name]: e.placeholder + ' is required!' })
+        // } else {
+        //     // setErrors({ ...errors, [e.name]: false })
+        // }
     }
 
     return (
@@ -100,21 +100,21 @@ export default function Adminsetting() {
 
                                 <div className="mb-3">
                                     <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
-                                    <input type="number" name="bper" value={setting.bonus_percentages} onChange={handleChange} className="form-control text-dark input" id="bonuspercentage" />
+                                    <input type="number" name="bper" value={setting.bonus_percentages}  onChange={handleChange} className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="sdate" className="form-label color_theme">Start Date</label>
-                                    <input type="date" name="sdate" value={setting.bonus_fdates} onChange={handleChange} className="form-control text-dark input " id="sdate" />
+                                    <input type="date" name="sdate"  onChange={handleChange} className="form-control text-dark input " id="sdate" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edate" className="form-label color_theme">End Date</label>
-                                    <input type="date" name="edate"  value={setting.bonus_edates} onChange={handleChange} className="form-control text-dark input " id="edate" />
+                                    <input type="date" name="edate"  onChange={handleChange} className="form-control text-dark input " id="edate" />
                                 </div>
                             </div>
                             <div className="border_theme_1px p-3 rounded mt-2">
                                 <div className="mb-3">
                                     <label htmlFor="number" className="form-label color_theme">Service Fees Percentage</label>
-                                    <input type="number" className="form-control text-dark input" value={setting.srvcfees} onChange={handleChange} name="srvcfees" id="servicep" />
+                                    <input type="number" className="form-control text-dark input"  onChange={handleChange} name="srvcfees" id="servicep" />
                                 </div>
                             </div>
 
@@ -124,7 +124,7 @@ export default function Adminsetting() {
                                 <label htmlFor="edate" className="form-label color_theme">Reward Percentage</label>
                                 {rewardper.map((e)=>{
                                     return <div className="mb-2" key={e.id}>
-                                    <input type="number" value={e.per}  name="rewardpercentage" className="form-control text-dark input" id="bonuspercentage" />
+                                    <input type="number" onChange={handleChange} value={e.per}  name="rewardpercentage" className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 })
                                 }
@@ -132,7 +132,6 @@ export default function Adminsetting() {
                                 <textarea className="form-control text-dark input" value={setting.twitter_post} name="twitter" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
                             </div>
                             <div className="d-flex justify-content-center">
-
                             <button type="button" className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitsetting()}>Submit</button>
                             </div>
                         </div>
