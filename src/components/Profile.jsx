@@ -127,6 +127,7 @@ export default function Profile() {
         
     }
 
+    
     var handleimage = function (event) 
     {
       var images = document.getElementById("pic");

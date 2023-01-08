@@ -1,251 +1,171 @@
-import React, { useEffect,useState } from 'react'
-import { bootstrap } from 'bootstrap/dist/js/bootstrap.bundle.min';
-import eth from '../img/et.png'
-import bnb from '../img/bnb.png'
-import trc from '../img/trc_20.png'
-import { get_user } from './allfun';
+import React from 'react'
+import { useState } from 'react'
+import { useEffect } from 'react';
+import { get_user ,smdate} from './allfun';
 import axios from 'axios';
-import $ from "jquery"
+export default function Adminsetting() {
 
+    const [success, setSuccess] = useState("")
+    const [errors, setErrors] = useState([])
+    const [bonuspertable,setbonuspertable] = useState([])
+    const [settingdetails,setsettingdetails] = useState([])
+    const [rewardper,setrewardper] = useState([])
 
-export default function Buytokenmain() {
+    const [setting, setsetting] = useState(
+        {
+            bper: "",
+            sdate: "",
+            edate: "",
+            srvcfees: "",
+            rewardpercentage:"",
+            twitter:"twitter",  
+        }
+    )
+    const userauth = get_user()
+
+ 
     useEffect(() => {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    })
-    const [buytoken , setbuytoken] = useState([])
-    const [coin,setcoin] = useState()
-    const usersauth = get_user()
-
-
-    useEffect(()=>{
-        const postData = { user_id: 2,id:2};
-        const response =  axios({
+      
+        const postData = { user_id: userauth.id };
+        const response = axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'buy-token',
-            data: postData,
-          }).then(async function (response) {
+            url: process.env.REACT_APP_API_PATH + 'setting',
+            data: postData
+        }).then(async function (response) {
             const res = await response.data.data;
-            console.log("hdhdhddh")
-              console.log(res)
-              setbuytoken(res)
-            });
-    }, [])
-    const getcoin = async (e) => {
+            console.log(res)
+            settingdetails.bper_details = res.bper_details
+            setsetting(res)
+            setbonuspertable(res.bper_details)
+            setrewardper(res.percentages)
+            console.log(rewardper)
+        });
+    }, []);
+
+    const submitsetting = async () => {
+        setting.user_id = userauth.id;
+        // const postData = setting;
         await axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            url: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BNB,USDT,ETH&tsyms=USD&api_key=1441933b04b3be0a07c3007578213370dabed7c1f55e8ba29c027cbb67415a57',
+            url: process.env.REACT_APP_API_PATH + 'submit-setting',
+            // data: postData,
         }).then(function (res) {
-            console.log(res.data)
-            const price_table_json = res.data;
-            const price_table_json_BNB = price_table_json.BNB.USD;
-            const price_table_json_USDT = price_table_json.USDT.USD;
-            const price_table_json_ETH = price_table_json.ETH.USD;
-            localStorage.setItem('price_table_json_BNB', price_table_json_BNB);
-            localStorage.setItem('price_table_json_USDT', price_table_json_USDT);
-            localStorage.setItem('price_table_json_ETH', price_table_json_ETH);
-                // localStorage.setItem('per', per);
-                    // localStorage.removeItem('coin_dlr_price', price_table_json_BNB);
-
-                localStorage.setItem('check', 0);
-                
-          
-                localStorage.removeItem('conv_coin_price');
+            if (res.data.success && res.data.success == 1) {
+                // setsetting(res)
+                setSuccess(res.data.message)
+                console.log(res)
+            } else {
+                setErrors(errors)
+            }
+            console.log(res)
         }).catch((err) => {
-            const errors = err.response;
+            const errors = err.response.data.data;
             console.log(errors)
+            setErrors(errors)
             console.log('errors')
             console.log(errors)
+            setSuccess("")
         });
     };
-    function handlechange(e) {
-        setcoin(e)
-        console.log(e)
-        console.log(coin)
-      
-        localStorage.setItem('conv_coin', e);
-        let coin_dlr ='price_table_json_' + e
-        let coin_dlr_table = localStorage.setItem('coin_dlr_table', coin_dlr)
-        let coin_table_val = localStorage.getItem(coin_dlr_table)
-     
+    const closeMessage=(e) => {
+		if (e == 1) {
+			// setError("")
+			setSuccess("")
+		}
+	}
+    const handleChange = (e) => {
+        console.log(e.target.value)
+        setsetting({ ...setting, [e.name]: e.value })
 
-
-        if (e)
-        {
-            localStorage.setItem('coin_dlr_price', localStorage.getItem(localStorage.getItem("coin_dlr_table")));
-            $(".coin-two-price").onKeyUp();
-        }
-        // $(".coin-two-price").onKeyUp()
-        // console.log(e == "bnb")
-
-        // if(e == "BNB")   
-        //         {
-            //   console.log(price_table_json_BNB)
-            //   let bnbprice = localStorage.getItem("price_table_json_BNB");
-              
-                // }
-                // else if(e = "ETH"){
-                //    let price_table_json_ETH = localStorage.getItem( price_table_json_ETH);
-                //     localStorage.setItem('coin_dlr_price', price_table_json_ETH);
-                // }else if(e = "USD")
-                // {   let price_table_json_USDT=  localStorage.getItem( price_table_json_USDT)
-                //     localStorage.setItem('coin_dlr_price', price_table_json_USDT);
-
-                // }
-                getcoin()
+        // if (e.name == "") {
+        //     setErrors([])
+        // }
+        // if (e.value == '') {
+        //     setErrors({ ...errors, [e.name]: e.placeholder + ' is required!' })
+        // } else {
+        //     // setErrors({ ...errors, [e.name]: false })
+        // }
     }
 
-
-const inptwo = (e)=>{   
-    var conv_coin = localStorage.getItem('conv_coin');
-    if (!conv_coin) {
-        alert("Error!", "Please select coin!", "error");
-        return false;
-    }
-    var conv_coin_price =$(".coin-two-price").val();
-   
-    var coin_dlr_price = localStorage.getItem('coin_dlr_price');
-    
-    var coin_one_price = conv_coin_price * coin_dlr_price;
-    coin_one_price = coin_one_price.toFixed(2);
-    var total_amt_conv_coin = (conv_coin_price / coin_dlr_price).toFixed(2);
-    $(".coin-one-price").val(total_amt_conv_coin);
-    localStorage.setItem('total_amt_conv_coin', total_amt_conv_coin);
-    localStorage.setItem('conv_coin_price', conv_coin_price);
-    localStorage.setItem('coin_one_price', total_amt_conv_coin);
-    var per = localStorage.getItem('per');
-    gettokens(conv_coin_price, per)
-}
-function gettokens(amount, per) {
-    if (amount >= 0) {
-        $.ajax({
-            url: process.env.REACT_APP_API_PATH + "gettokens",
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'JSON',
-            data: {
-                amount: amount,
-                per: per,
-            },
-            success: function (response) {
-                var total_amount = (response.total_tokens + response.bonus_tokens).toFixed(2);
-                $(".tokens").html('Total Tokens = ' + response.total_tokens + ' + Bonus Tokens = ' +
-                    response.bonus_tokens);
-                $(".bonus-tokens").html(total_amount);
-                localStorage.setItem('tokens', total_amount);
-                localStorage.setItem('bonus_tokens', total_amount);
-            }
-        });
-    }
-}
-
-
-
-useEffect(()=>{
-    getcoin()
-},[])
     return (
         <>
-            <div className="border_theme_1px text-center rounded">
-                <p className='color_theme mt-3 '>{"Current Price : "+  buytoken.snoozz_current_price}</p>
-            </div>
-            <div className="border_theme_1px rounded mt-2">
-                <div className="p-3">
-                    <h1 className='color_theme'>${buytoken.goal_per}</h1>
-                    <div className="d-flex justify-content-between">
-                        <div className='me-3'>
-                            <p className='text-light'>0% of minimum goal raised</p>
-                        </div>
-                        <div>
-                            <i className="fa-solid fa-info bg_theme p-1 rounded"></i>
-                        </div>
-                    </div>
-                    <div className="progress">
-                        <div className="progress-bar w-25" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p className='text-end color_theme'>${buytoken.goal}</p>
-                    <div className="border_theme_1px d-flex justify-content-between rounded p-1">
-                        <h6 className='text-light mt-2'>Participants</h6>
-                        <h3 className='text-light'>{buytoken.participant}</h3>
-                    </div>
-                    <div className="border_theme_1px mt-2 rounded">
-                        <h5 className='text-light p-2'>{buytoken.per}% bonus end in:</h5>
-                        <div className="row">
-                            <div className="col text-center">
-                                <h4 className='color_theme'>1066</h4>
-                                <p className='text-light'>Days</p>
-                            </div>
-                            <div className="col text-center">
-                                <h4 className='color_theme'>1066</h4>
-                                <p className='text-light'>Hours</p>
-                            </div>
-                            <div className="col text-center">
-                                <h4 className='color_theme'>1066</h4>
-                                <p className='text-light'>Min</p>
-                            </div>
-                            <div className="col text-center">
-                                <h4 className='color_theme'>1066</h4>
-                                <p className='text-light'>Sec</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="border_theme_1px rounded mt-2">
-                        <p className='text-light p-2'>{buytoken.per}% bonus end in:</p>
-                        <div className="row mx-1">
-                            <div className="col-6 p-2">
-                                <input type="number" className="form-control text-dark coin-two-price"  aria-label=".." onKeyUp={inptwo} />
-                            </div>
-                            <div className="col-6 p-2">
-                                <div className="input-group mb-3">
-                                    <input type="text" className="form-control text-dark coin-one-price btn_inp"  aria-label="Text input with dropdown button" />
-                                    <button className="btn btn-outline-secondary dropdown-toggle"  id="conv-value" type="button" data-bs-toggle="dropdown" aria-expanded="false">{coin}</button>
-                                    <ul className="dropdown-menu dropdown-menu-end">
-                                        <li onClick={
-                                            e=>
-                                            {
-                                                e.preventDefault();
-                                            handlechange('BNB')
-                                            }
-                                            } id="active-BNB" class="conv-coin"><a className="dropdown-item color_theme d-flex coin" href="#"><div><img src={bnb} className="coin_image"></img></div><div><p className='mt-1'>BNB</p></div></a></li>
-                                        <li onClick={
-                                            e=>
-                                            {
-                                                e.preventDefault();
-                                            handlechange('ETH')
-                                            }
-                                            } class="conv-coin" id="active-USDT"><a className="dropdown-item color_theme d-flex coin" href="#"><div><img src={eth} className="coin_image"></img></div><div><p className='mt-1'>ETH</p></div></a></li>
-                                        <li onClick={
-                                            e=>
-                                            {
-                                                e.preventDefault();
-                                            handlechange('USDT')
-                                            }
-                                            } class="conv-coin" id="active-ETH"><a className="dropdown-item color_theme d-flex coin"  href="#"><div><img src={trc} className="coin_image"></img></div><div><p className='mt-1'>USDT</p></div></a></li>
-                                    </ul>
-                                   
+            <div className="container-fluied mx-5 top_sec_margin">
+                <form>
+                    <div className="row">
+                        <div className="col-lg-6">
+
+                            <div className="border_theme_1px p-3 rounded">
+
+                                <div className="mb-3">
+                                    <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
+                                    <input type="number" name="bper" value={setting.bonus_percentages}  onChange={handleChange} className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
-
+                                <div className="mb-3">
+                                    <label htmlFor="sdate" className="form-label color_theme">Start Date</label>
+                                    <input type="date" name="sdate"  onChange={handleChange} className="form-control text-dark input " id="sdate" />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="edate" className="form-label color_theme">End Date</label>
+                                    <input type="date" name="edate"  onChange={handleChange} className="form-control text-dark input " id="edate" />
+                                </div>
                             </div>
-                            <p className='text-start text-light'>Snoozz Amount:</p>
-                            <p className='text-start text-light'>ZSnoozz Amount:</p>
-                            <div class="mb-3 ms-3 d-flex justify-content-center form-check">
-                                <input type="checkbox" class="form-check-input me-2" id="exampleCheck1" />
-                                <label class="form-check-label text-light" for="exampleCheck1">I agree with Terms and Conditions !!</label>
+                            <div className="border_theme_1px p-3 rounded mt-2">
+                                <div className="mb-3">
+                                    <label htmlFor="number" className="form-label color_theme">Service Fees Percentage</label>
+                                    <input type="number" className="form-control text-dark input"  onChange={handleChange} name="srvcfees" id="servicep" />
+                                </div>
                             </div>
                         </div>
-
+                        <div className="col-lg-6">
+                            <div className="border_theme_1px p-3 rounded">
+                                <label htmlFor="edate" className="form-label color_theme">Reward Percentage</label>
+                                {rewardper.map((e)=>{
+                                    return <div className="mb-2" key={e.id}>
+                                    <input type="number" onChange={handleChange} value={e.per}  name="rewardpercentage" className="form-control text-dark input" id="bonuspercentage" />
+                                </div>
+                                })
+                                }
+                                <label htmlFor="floatingTextarea2" name="twitter_post" className="form-label color_theme">Twitter Post</label>
+                                <textarea className="form-control text-dark input" value={setting.twitter_post} name="twitter" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
+                            </div>
+                            <div className="d-flex justify-content-center">
+                            <button type="button" className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitsetting()}>Submit</button>
+                            </div>
+                        </div>
                     </div>
-
+                </form>
+                <hr>
+                </hr>
+                <div className="card bg-transparent border_theme_1px text-center mt-3 gl_morph ">
+                <div className="card-header color_theme ">
+                    <h5 className="h5 p-2 text-light">Bonus Percentage</h5>
+                </div>
+                <div className="card-body table-responsive">
+                    <table className="table text-light text-start border-2 wsnwrap">
+                        <thead>
+                            <tr className='text-center'>
+                           <th>Sr No</th>
+                            <th >Percentage(%)	</th>
+                            <th >Start Date</th>
+                            <th >End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {bonuspertable.map((e,index) => {
+                              return<tr key = {e.id} className='text-center'>
+                                <td>{index+1}</td>
+                               <td>{e.percentage}</td>
+                                <td>{e.from_date}</td>
+                                <td>{e.end_date}</td>
+                            </tr>
+                          })}
+                         
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div className="d-flex justify-content-center mt-2  ">
-                <button className="w-25 Snoozz_fn_button shdow_green p-3 fwthin">
-                    submit
-                </button>
             </div>
 
         </>

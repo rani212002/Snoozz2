@@ -14,11 +14,11 @@ export default function Adminsetting() {
     const [setting, setsetting] = useState(
         {
             bper: "",
-            sdate: "",
-            edate: "",
+            bonus_fdates: "",
+            bonus_edates: "",
             srvcfees: "",
-            rewardpercentage:"",
-            twitter:"twitter",  
+            percentages:"",
+            twitter_post:"twitter",  
         }
     )
     const userauth = get_user()
@@ -42,15 +42,21 @@ export default function Adminsetting() {
             console.log(rewardper)
         });
     }, []);
+    const handleChange = (e,per) => {
+        console.log(e.target.value)
+        console.log(per)
+        setsetting({ ...setting, [e.target.name]: e.target.value })
+    }
 
     const submitsetting = async () => {
         setting.user_id = userauth.id;
-        // const postData = setting;
+        
+        const postData = {bper:setting.bonus_percentages,sdate:setting.bonus_fdates,edate:setting.bonus_edates,user_id:userauth.id};
         await axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             url: process.env.REACT_APP_API_PATH + 'submit-setting',
-            // data: postData,
+            data: postData,
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
                 // setsetting(res)
@@ -75,20 +81,6 @@ export default function Adminsetting() {
 			setSuccess("")
 		}
 	}
-    const handleChange = (e) => {
-        console.log(e.target.value)
-        setsetting({ ...setting, [e.name]: e.value })
-
-        // if (e.name == "") {
-        //     setErrors([])
-        // }
-        // if (e.value == '') {
-        //     setErrors({ ...errors, [e.name]: e.placeholder + ' is required!' })
-        // } else {
-        //     // setErrors({ ...errors, [e.name]: false })
-        // }
-    }
-
     return (
         <>
             <div className="container-fluied mx-5 top_sec_margin">
@@ -100,36 +92,35 @@ export default function Adminsetting() {
 
                                 <div className="mb-3">
                                     <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
-                                    <input type="number" name="bper" value={setting.bonus_percentages}  onChange={handleChange} className="form-control text-dark input" id="bonuspercentage" />
+                                    <input type="number" name="bper" value={setting.bonus_percentages} onChange={handleChange}  className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="sdate" className="form-label color_theme">Start Date</label>
-                                    <input type="date" name="sdate"  onChange={handleChange} className="form-control text-dark input " id="sdate" />
+                                    <input type="date" name="bonus_fdates" value={setting.bonus_fdates}  onChange={handleChange}   className="form-control text-dark input " id="sdate" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edate" className="form-label color_theme">End Date</label>
-                                    <input type="date" name="edate"  onChange={handleChange} className="form-control text-dark input " id="edate" />
+                                    <input type="date" name="bonus_edates" value={setting.bonus_edates} onChange={handleChange}   className="form-control text-dark input " id="edate" />
                                 </div>
                             </div>
                             <div className="border_theme_1px p-3 rounded mt-2">
                                 <div className="mb-3">
                                     <label htmlFor="number" className="form-label color_theme">Service Fees Percentage</label>
-                                    <input type="number" className="form-control text-dark input"  onChange={handleChange} name="srvcfees" id="servicep" />
+                                    <input type="number"  onChange={handleChange} value={setting.srvcfees} className="form-control text-dark input"   name="srvcfees" id="servicep" />
                                 </div>
                             </div>
-
                         </div>
                         <div className="col-lg-6">
                             <div className="border_theme_1px p-3 rounded">
                                 <label htmlFor="edate" className="form-label color_theme">Reward Percentage</label>
                                 {rewardper.map((e)=>{
                                     return <div className="mb-2" key={e.id}>
-                                    <input type="number" onChange={handleChange} value={e.per}  name="rewardpercentage" className="form-control text-dark input" id="bonuspercentage" />
+                                    <input type="number" onChange={handleChange}   value={e.per}  name="percentages" className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 })
                                 }
                                 <label htmlFor="floatingTextarea2" name="twitter_post" className="form-label color_theme">Twitter Post</label>
-                                <textarea className="form-control text-dark input" value={setting.twitter_post} name="twitter" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
+                                <textarea className="form-control text-dark input"  onChange={handleChange}   name="twitter_post" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
                             </div>
                             <div className="d-flex justify-content-center">
                             <button type="button" className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitsetting()}>Submit</button>

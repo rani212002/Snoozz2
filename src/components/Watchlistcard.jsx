@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 export default function Watchlistcard() {
     const[userid,setuserid] = useState()
     const [watchlist , setwatchlist] = useState([])
-    
+    const navigate = useNavigate();
 
     useEffect(()=>{
         let localData=localStorage.getItem('userauth');
@@ -30,12 +30,18 @@ export default function Watchlistcard() {
     }, [])
     console.log("i am activity")
     console.log(watchlist)
+    
+  const getid =(id)=> {
+    console.log(id)
+     navigate(`/buynft/${id}`);
+
+  }
   return (
     <>
       {watchlist.map((e) => {
         return (
           <div className="col-xl-3 col-lg-4 col-md-6 col-12">
-            <div
+            <div onClick={()=>getid(e.pid)}
               className="card discoveritemcards border_none bg-transparent"
               key={e.id}
             >

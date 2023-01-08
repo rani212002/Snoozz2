@@ -81,38 +81,49 @@ export default function Buynft(props) {
     }).then(async function (response) {
       const res = await response.data.data;
       console.log("hdhdhddh");
+      console.log()
       setdata(res)
       setnftproductdata(res.nftproduct)
+      // let per = res.percentage
+      // console.log(res.percentage)
+      // localStorage.setItem("percentage",per)
       setpercentage(res.percentage)
       setnftdata(res.nftproducts)
       console.log(res);
     });
   };
-
-  const stakenft = async (status) => {
-  
-    if(status==0)
+ 
+  function handleChange (month) {
+    console.log(month)
+    nftproductdata.month = month
+     
+ }
+  const stakenft = async () => {
+  console.log(data.staking) 
+    if(data.staking==0)
     {
-      const postData = data;
+      console.log("data")
+      console.log(nftproductdata)
+      const postData =nftproductdata
       console.log('profiledata');
-      console.log(data);
+      console.log(nftproductdata);
       await axios({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           url: process.env.REACT_APP_API_PATH + 'submit-buynft',
           data: postData,
       }).then(function (res) {
-          if (res.data.success && res.data.success == 1) {
-          } else  {
-          }
+         console.log(res)
+         if(res.data == 1)
+         {
+          alert("nft added successfully")
+         }
       }).catch((err) => {
-  
           const errors = err.response.data.data;
           console.log(errors)
           console.log('errors')
           console.log(errors)
       });
-  
     }
     else
     {
@@ -135,6 +146,7 @@ export default function Buynft(props) {
       />
     )
   })
+
   useEffect(() => {
 
     buynft()
@@ -190,15 +202,15 @@ export default function Buynft(props) {
                   <p className='color_pencile'>Percentage</p>
                   <ul className="list-group  bg-transparent border_none">
                     {console.log(percentage)}
-                    {/* {percentage.map((e)=>{
+                    {percentage.map((e)=>{
                                     return<li className="list-group-item bg-transparent border_none text-light" key={e.id}>
-                                    <input className="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio" />
+                                    <input className="form-check-input me-1" type="radio" name="listGroupRadio" value="" onClick={() => handleChange(e.month)} id="firstRadio" />
                                     <label className="form-check-label ms-2" for="firstRadio">{e.per} %(For {e.month} Months)</label>
                                   </li>
-                                })} */}
+                                })}
                   </ul>
                   <div className="d-flex justify-content-center">
-                    <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => stakenft(nftproductdata.status)}>Stake Now</button>
+                    <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => stakenft(nftproductdata.staking)}>Stake Now</button>
                   </div>
                 </div>
               </div>
@@ -211,7 +223,6 @@ export default function Buynft(props) {
         </div>
         <h3 className='color_pencile mt-5'>More Items From Collection</h3>
         <div className="row">
-
           <Slider {...settings}>
             {sliderListingData}
           </Slider>
