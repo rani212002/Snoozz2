@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { get_user } from "./allfun";
-
+import { useParams } from 'react-router-dom';
 import "../css/Usercollection.css";
 import Uercollectioncards from "./Uercollectioncards";
 export default function Usercollection() {
@@ -10,7 +10,9 @@ export default function Usercollection() {
   const [nftdata, setNftdata] = useState([]);
   const [userdata, setuserdata] = useState([]);
   const userauth = get_user()
+  const param = useParams();
   useEffect(() => {
+      // const postData = {user_id:userauth.id,id:param.id}
     const postData = {user_id:2,id:2}
     const response = axios({
       method: "POST",

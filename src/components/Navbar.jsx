@@ -165,11 +165,11 @@ var userid = data.id
                           Verify
                         </a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a className="dropdown-item dd_item" href="/contact">
                           ContactUS
                         </a>
-                      </li>
+                      </li> */}
                       <li>
                       <a className="dropdown-item dd_item" href="/likecol">
                           Like Collection

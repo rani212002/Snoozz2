@@ -2,7 +2,10 @@ import React from 'react'
 import axios from 'axios'
 import { useEffect,useState } from 'react'
 import { smallwalletaddress, smdate } from './allfun';
+import { useNavigate } from 'react-router-dom';
+
 export default function AdminUser() {
+  const navigate = useNavigate();
     const [user, setuser] = useState([]);
     useEffect(() => {
       const response = axios({
@@ -16,6 +19,14 @@ export default function AdminUser() {
         setuser(res);
       });
     }, []);
+    const getid =(id)=> {
+      console.log(id)
+       navigate(`/Viewuser/${id}`);
+    }
+    const getidview =(id)=> {
+      console.log(id)
+       navigate(`/adminverify/${id}`);
+    }
   return (
    
     <>
@@ -52,17 +63,16 @@ export default function AdminUser() {
                                 <td>{e.wallet}</td>
                                 <td>{smdate(e.created_at)}</td>
                                 <td>{e.verify}</td>
-                             
                                 <td>
                                     <div className="d-flex justify-content-center">
-                                    <button type="button" class="btn bg_theme mx-1"><a href='/viewuser'><i class="fa-solid fa-eye"></i></a></button>
-                                    <button type="button" class="btn btn_squre_theeme mx-1">View Verification</button>
+                                    <button type="button" class="btn bg_theme mx-1"  onClick={()=>
+              getid(e.id)}><a><i class="fa-solid fa-eye"></i></a></button>
+                                    <button type="button" class="btn btn_squre_theeme mx-1" onClick={()=>
+              getidview(e.id)} >View Verification</button>
                                     </div>
                                 </td>
-
                             </tr>
                           })}
-                         
                         </tbody>
                     </table>
                 </div>

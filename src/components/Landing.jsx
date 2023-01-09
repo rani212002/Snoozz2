@@ -22,6 +22,7 @@ import Coins from './Coins';
 import Coinsmaindata from './Coinsmaindata';
 import Trustedglobelly from './Trustedglobelly';
 import trusted from '../components/Trusteddata';
+import Buytokenmain from '../components/Buytokenmain'
 
 import Socialmedia from './Socialmedia';
 export default function Landing(props) {
@@ -175,7 +176,9 @@ export default function Landing(props) {
 
                     <Landing_tabs tab1_title="Referral" tab1_id="referral-tab" stake_tab1_con_id="referral-tab-pane" stake_tab1_dbt="#referral-tab-pane" btn_vissible1="d-block" btn_vissible1_con="Referral" tab2_title="NFT" tab2_id="nft-tab" stake_tab2_con_id="nft-tab-pane" stake_tab2_dbt="#nft-tab-pane" btn_vissible2_con="NFT" tab3_title="Staking Reward" tab3_id="staking_re-tab" stake_tab3_con_id="staking_re-tab-pane" stake_tab3_dbt="#staking_re-tab-pane" btn_vissible3_con="Staking Reward" stake_tab1_img={referral_img} stake_tab2_img={nft_tabs_img} stake_tab3_img={stakingre} />
                 </div>
-                <div className="col-lg-6"></div>
+                <div className="col-lg-6">
+                    <Buytokenmain/>
+                </div>
             </div>
             <div className="mx-5 mt-5">
                 <h1 className='text-white text-start'>What’s better than OpenSea?<br /><span className='color_theme'>own OpenSea</span></h1>

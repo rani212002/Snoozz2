@@ -17,11 +17,10 @@ export default function Buytokenlist() {
               console.log(res)
               setbuytokendata(res)
             });
-            
     }, [])
   return (
     <>
-            <div className="container-fluied  auto_height mx-3 mt-5">
+            <div className="container-fluied   mx-3 mt-5">
        <h2 className='color_pencile text-center mt-5'>Buy Token History</h2>
         <div className="card bg-transparent border_theme_1px text-center mt-3 gl_morph ">
                 <div className="card-header color_theme ">
@@ -40,7 +39,6 @@ export default function Buytokenlist() {
                             <th >Amount($)</th>
                             <th>SNOOZZ Tokens</th>
                             <th>ZSNOOZZ</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -55,10 +53,8 @@ export default function Buytokenlist() {
                                 <td>{e.amount}</td>
                                 <td>{e.tokens}</td>
                                 <td>{e.token_price}</td>
-
                             </tr>
                           })}
-                         
                         </tbody>
                     </table>
                 </div>

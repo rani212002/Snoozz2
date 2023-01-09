@@ -84,9 +84,6 @@ export default function Buynft(props) {
       console.log()
       setdata(res)
       setnftproductdata(res.nftproduct)
-      // let per = res.percentage
-      // console.log(res.percentage)
-      // localStorage.setItem("percentage",per)
       setpercentage(res.percentage)
       setnftdata(res.nftproducts)
       console.log(res);
@@ -129,7 +126,6 @@ export default function Buynft(props) {
     {
       alert("this nft is already on staking")
     }
-   
     // set profile image
 };
 
@@ -198,21 +194,23 @@ export default function Buynft(props) {
                   <p className="color_pencile">$({data.total_price})</p>
                 </div>
                 <hr></hr>
-                <div className="p-3">
+                {data.staking==0?<div className="p-3" >
                   <p className='color_pencile'>Percentage</p>
                   <ul className="list-group  bg-transparent border_none">
                     {console.log(percentage)}
-                    {percentage.map((e)=>{
+                    {/* {percentage.map((e)=>{
                                     return<li className="list-group-item bg-transparent border_none text-light" key={e.id}>
                                     <input className="form-check-input me-1" type="radio" name="listGroupRadio" value="" onClick={() => handleChange(e.month)} id="firstRadio" />
                                     <label className="form-check-label ms-2" for="firstRadio">{e.per} %(For {e.month} Months)</label>
                                   </li>
-                                })}
+                                })} */}
                   </ul>
                   <div className="d-flex justify-content-center">
                     <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => stakenft(nftproductdata.staking)}>Stake Now</button>
                   </div>
-                </div>
+                </div>:<h4 className='color_theme'>Already on Stake</h4>
+                }
+              
               </div>
             </div>
             <Buynftextracards />

@@ -60,7 +60,7 @@ export default function Additem() {
         formData.append("ipfs_hash","fjkefhfdhfdjkshfjkfhjskfhdkjfhjks")
         await axios({
             method: 'POST',
-            url: process.env.REACT_APP_API_PATH + 'submit-nft',
+            url: process.env.REACT_APP_API_PATH + 'validate_item',
             data: formData,
         }).then(function (res) {
             console.log("resthen")
@@ -78,7 +78,6 @@ export default function Additem() {
         e.preventDefault();
         submitImage()
         submitItem()
-        
     };
 
     const handleChangeimg = function (event) {
@@ -148,7 +147,7 @@ export default function Additem() {
                                     By minting this NFT you agree that these works belong to you and only you. Please respect the creativity of other artists in the space. We would love you for it.
                                 </label>
                             </div>
-                            <button type="submit" className="Snoozz_fn_button p-3 shdow_green mt-2">Submit</button>
+                            <button type="submit" className="Snoozz_fn_button p-3 shdow_green mt-2" onClick={() => submitProfile()}>Submit</button>
                         </form>
                     </div>
                 </div>

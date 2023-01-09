@@ -4,9 +4,11 @@ import React from 'react'
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import {get_user} from '../components/allfun.js'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Discovercollectioncard() {
+  const navigate = useNavigate();
     const [collnftdata, setcollnftdata] = useState([]);
     const userauth = get_user()
     useEffect(() => {
@@ -22,19 +24,24 @@ export default function Discovercollectioncard() {
         setcollnftdata(res.collections);
       });
     }, []);
+    const getid =(id)=> {
+      console.log(id)
+       navigate(`/usercollection/${id}`);
+    }
     return (
         <>
          {collnftdata.map((e) => {  
         return (
           <>
-          <Link to="/usercollection">
+         
           <div className="col-lg-4 col-md-6 col-12 mt-2">
             <div className="card discovercollcard  bg-transparent" key={e.id} >
                 <div className="row">
                     <div className='col-4'>
                         <img src='https://snoozz.io/ver1/img/profileimage/Profile.png' class="w-75 artist_img ms-2 mt-2" alt="..." />
                     </div>  
-                    <div className='col-5'>
+                    <div className='col-5'  onClick={()=>
+              getid(e.id)}>
                         <h4 className='color_theme mt-4'>{e.name}</h4>
                         <p className='color_pencile'>created by<span className='color_theme'>Rani</span></p>
                     </div>
@@ -47,7 +54,7 @@ export default function Discovercollectioncard() {
                 </div>
             </div>
           </div>
-          </Link>
+        
           </>
         );
       })}

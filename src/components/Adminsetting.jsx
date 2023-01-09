@@ -13,7 +13,7 @@ export default function Adminsetting() {
 
     const [setting, setsetting] = useState(
         {
-            bper: "",
+            bonus_percentages: "",
             bonus_fdates: "",
             bonus_edates: "",
             srvcfees: "",
@@ -46,12 +46,13 @@ export default function Adminsetting() {
         console.log(e.target.value)
         console.log(per)
         setsetting({ ...setting, [e.target.name]: e.target.value })
+        console.log(setting)
     }
 
     const submitsetting = async () => {
         setting.user_id = userauth.id;
         
-        const postData = {bper:setting.bonus_percentages,sdate:setting.bonus_fdates,edate:setting.bonus_edates,user_id:userauth.id};
+        const postData = {bper:setting.bonus_percentages,per:8,sdate:setting.bonus_fdates,edate:setting.bonus_edates,user_id:userauth.id};
         await axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -92,7 +93,7 @@ export default function Adminsetting() {
 
                                 <div className="mb-3">
                                     <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
-                                    <input type="number" name="bper" value={setting.bonus_percentages} onChange={handleChange}  className="form-control text-dark input" id="bonuspercentage" />
+                                    <input type="number" name="bonus_percentages" value={setting.bonus_percentages} onChange={handleChange}  className="form-control text-dark input" id="bonuspercentage" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="sdate" className="form-label color_theme">Start Date</label>
@@ -108,7 +109,7 @@ export default function Adminsetting() {
                                     <label htmlFor="number" className="form-label color_theme">Service Fees Percentage</label>
                                     <input type="number"  onChange={handleChange} value={setting.srvcfees} className="form-control text-dark input"   name="srvcfees" id="servicep" />
                                 </div>
-                            </div>
+                            </div>  
                         </div>
                         <div className="col-lg-6">
                             <div className="border_theme_1px p-3 rounded">

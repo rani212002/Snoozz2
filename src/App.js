@@ -63,7 +63,7 @@ function App() {
         <Route path="/nftlist" element={<NFTlist />}></Route>
         <Route path="/watchlist" element={<Watchlist />}></Route>
         <Route path="/artist-collected" element={<Artistcollected />}></Route>
-        <Route path="/usercollection" element={<Usercollection />}></Route>
+        <Route path="/usercollection/:id" element={<Usercollection />}></Route>
         <Route path="/support" element={<Support />}></Route>
         <Route path="/buynft/:id" element={<Buynft />}></Route>
         <Route path="/likecol" element={<LikeCol />}></Route>
@@ -73,9 +73,9 @@ function App() {
         <Route path="/adminsetting" element={<Adminsetting />}></Route>
         <Route path="/adminuser" element={<AdminUser />}></Route>
 
-        <Route path="/viewuser" element={<Viewuser />}></Route>
+        <Route path="/viewuser/:id" element={<Viewuser />}></Route>
         <Route path="/adduser" element={<Adduser />}></Route>
-        <Route path="/adminverify" element={<Adminverify />}></Route>
+        <Route path="/adminverify/:id" element={<Adminverify />}></Route>
       </Routes>
       <Footer />
     </>

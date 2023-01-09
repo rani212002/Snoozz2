@@ -3,15 +3,12 @@ import Table from './Table'
 import axios from 'axios';
 import '../css/Activity.css'
 import { smallwalletaddress, smdate, get_user } from './allfun';
-
 export default function Activity(props) {
-
     const [userid, setuserid] = useState()
     const [activitydata, setactivitydata] = useState([])
     const userauth = get_user();
-
+    console.log(userauth.id)
     useEffect(() => {
-
         const postData = { user_id: userauth.id };
         const response = axios({
             method: 'POST',
