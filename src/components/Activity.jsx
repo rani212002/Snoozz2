@@ -9,6 +9,7 @@ export default function Activity(props) {
     const userauth = get_user();
     console.log(userauth.id)
     useEffect(() => {
+        // const postData = { user_id: userauth.id };
         const postData = { user_id: userauth.id };
         const response = axios({
             method: 'POST',

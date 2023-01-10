@@ -10,6 +10,10 @@ export default function StakingrewardTable() {
             url: process.env.REACT_APP_API_PATH + 'staking-rewards',
           }).then(async function (response) {
             const res = await response.data.data;
+            if(res=="")
+            {
+              console.log("there is no data in response")
+            }
             console.log("hdhdhddh")
               console.log(res)
               setstakingrewarddata(res)
@@ -51,8 +55,8 @@ export default function StakingrewardTable() {
                                 <td>{e.tokens}</td>
                                 <td>{e.token_price}</td>
                             </tr>
-                          })} */}
-                         
+                          })}
+                          */}
                         </tbody>
                     </table>
                 </div>

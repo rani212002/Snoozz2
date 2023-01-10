@@ -1,208 +1,200 @@
-$(document).ready(function () {
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import '../css/additem.css'
+import accrord from '../img/accordian_side.png'
+import { get_user } from './allfun'
+export default function Additem() {
+    const userauth = get_user()
+   const [collection,setcollection]=useState([])
+  const [likestatus,setlikestatus]= useState([])
+    const [nft, setnft] = useState(
+        {
+            image: "",
+        }
+    )
+    const [itemdata, setitemdata] = useState({
+        
+        title:"",
+        price:"",
+        royalty:"",
+        fees:"",
+        description:"",
+        collection:"",
+        itemterms:"",
+        image_uploads:""
+    })
+    const getcollections= ()=>{
+        const postData = { user_id: userauth.id };
+        const response = axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            url: process.env.REACT_APP_API_PATH + 'add-item',
+            data: postData
+        }).then(async function (response) {
+            const res = await response.data;
+            console.log('res')
+            console.log(res.data)
+            setcollection(res.data)
+    
+        });
+    }
+    const handleChangecol =(e)=>{
+        console.log(e.target.value)
+        itemdata.collection =e.target.value
+       }
+       const handleChangeimg = function (e) {
+        var images = document.getElementById("pic");
+        images.src = URL.createObjectURL(e.target.files[0]);
+        itemdata.image_uploads = e.target.files[0]
+        setnft({
+            image: e.target.files[0],
+        })
+        console.log(e.target.files[0])
+    };
+    const submitItem = async (e) => {
+       console.log(itemdata)
+       itemdata.itemterms = 1
+        const formData = new FormData();
+        formData.append("user_id", userauth.id);
+        formData.append("title",itemdata.title);
+        formData.append("price",itemdata.price);
+        formData.append("royalty",itemdata.royalty);
+        formData.append("fees",itemdata.fees);
+        formData.append("description",itemdata.desc);
+        formData.append("collection",itemdata.collection);   
+        formData.append("item-terms", "1");
+        formData.append("image_uploads", itemdata.image_uploads);
+        await axios({
+            method: 'POST',
+            url: process.env.REACT_APP_API_PATH + 'validate-item',
+            data: formData,
+        }).then(function (res) {
+            console.log("resthen")
+            console.log(res)
+            if (res != "" && res.image_exist) {
+                formData.append("ipfs_hash", res.IpfsHash);
+                formData.append("insert_weekly_record", res.insert_weekly_record);
+                formData.append("update_weekly_record", res.update_weekly_record);
+                formData.append(
+                  "increment_weekly_record",
+                  res.increment_weekly_record
+                );
+            axios({
+                method: 'POST',
+                url: 'https://gama.profitsla.com/upload/upload_img',
+                data: formData,
+            }).then(function (res) {
+                console.log("resthen")
+                console.log(res)
+                if (res){
 
-  localStorage.setItem('price_table_json_BNB', price_table_json_BNB);
-  localStorage.setItem('price_table_json_USDT', price_table_json_USDT);
-  localStorage.setItem('price_table_json_ETH', price_table_json_ETH);
-
-  
-
-  localStorage.setItem('per', per);
-  localStorage.setItem('check', 0);
-  localStorage.setItem('conv_coin', 'BNB');
-  localStorage.setItem('coin_dlr_price', price_table_json_BNB);
-  localStorage.removeItem('conv_coin_price');
-});
-
-$("#conv-value").click(() => {
-  $("#dd_ul").toggleClass("show , dd_position")
-})
-
-$(".conv-coin").click(function () {
-  var this_id = $(this).attr('id');
-  $(".conv-coin").children('a').removeClass('active');
-  $(this).children('a').addClass('active');
-  var conv_coin = this_id.replace("active-", "");
-  $("#conv-value").html(conv_coin);
-  localStorage.setItem('coin_dlr_price', localStorage.getItem('price_table_json_' + conv_coin));
-  localStorage.setItem('conv_coin', conv_coin);
-  $(".coin-two-price").keyup();
-});
-
-$(".coin-two-price").keyup(function () {
-  var conv_coin = localStorage.getItem('conv_coin');
-  if (!conv_coin) {
-      swal("Error!", "Please select coin!", "error");
-      return false;
-  }
-  var conv_coin_price = $(this).val();
-  var coin_dlr_price = localStorage.getItem('coin_dlr_price');
-  var coin_one_price = conv_coin_price * coin_dlr_price;
-  coin_one_price = coin_one_price.toFixed(DECIMAL);
-  var total_amt_conv_coin = (conv_coin_price / coin_dlr_price).toFixed(DECIMAL);
-  $(".coin-one-price").val(total_amt_conv_coin); //shdvjhvsjljlhljhvljhvljhvljhvljhv
-  localStorage.setItem('total_amt_conv_coin', total_amt_conv_coin);
-  localStorage.setItem('conv_coin_price', conv_coin_price);
-  localStorage.setItem('coin_one_price', total_amt_conv_coin);
-  var per = localStorage.getItem('per');
-
-  gettokens(conv_coin_price, per)
-});
-
-$("#flexCheckChecked").click(function () {
-  var this_val = $(this).prop("checked");
-  if (this_val == true) {
-      localStorage.setItem('check', 1);
-  } else {
-      localStorage.setItem('check', 0);
-  }
-});
-
-$("#submit-buytoken").click(function () {
-  var auth_id = $.cookie("auth_id");
-  if (!auth_id) {
-      swal("Error!", "Please connect wallet!", "error");
-  }
-  var terms = localStorage.getItem('check');
-  if (terms == false) {
-      swal({
-          title: "Warning!",
-          text: "Please check terms and conditions!",
-          icon: "error",
-          button: "OK!",
-      });
-      return false;
-  }
-
-
-  var error = 0;
-  var selected_coin = localStorage.getItem('conv_coin') || 0;
-  var coin_dlr_price = localStorage.getItem('coin_dlr_price') || 0;
-  var per = localStorage.getItem('per') || 0;
-  var coin_one_price = localStorage.getItem('coin_one_price') || 0;
-
-  var coin_two_price = localStorage.getItem('conv_coin_price') || 0;
-  var tokens = localStorage.getItem('tokens') || 0;
-  var bonus_tokens = localStorage.getItem('bonus_tokens') || 0;
-
-  if (selected_coin <= 0 || coin_dlr_price <= 0) {
-      var type = 'select';
-      var type1 = 'coin';
-      var error = 1;
-  }
-
-  if (coin_one_price <= 0 || coin_two_price <= 0 || tokens <= 0 || bonus_tokens <= 0) {
-      var type = 'enter';
-      var type1 = 'some amount';
-      var error = 1;
-  }
-
-  if (error == 1) {
-      swal({
-          title: "Warning!",
-          text: "Please " + type + " " + type1 + "!",
-          icon: "error",
-          button: "OK!",
-      });
-      return false;
-  }
-  buy();
-});
-
-function submit_token() {
-  var selected_coin = localStorage.getItem('conv_coin') || 0;
-  var coin_dlr_price = localStorage.getItem('coin_dlr_price') || 0;
-  var per = localStorage.getItem('per') || 0;
-  var coin_one_price = localStorage.getItem('coin_one_price') || 0;
-  var coin_two_price = localStorage.getItem('conv_coin_price') || 0;
-  var tokens = localStorage.getItem('tokens') || 0;
-  var bonus_tokens = localStorage.getItem('bonus_tokens') || 0;
-
-  $.ajax({
-      url: buytoken_post,
-      type: 'POST',
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      dataType: 'JSON',
-      data: {
-          selected_coin: selected_coin,
-          coin_dlr_price: coin_dlr_price,
-          per: per,
-          coin_one_price: coin_one_price,
-          coin_two_price: coin_two_price,
-          tokens: tokens,
-          bonus_tokens: bonus_tokens,
-      },
-      success: function (response) {
-          if (response) {
-              // DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE DONT REMOVE 
-              // var coin_one_price = localStorage.getItem('coin_one_price') || 0;
-              // buy(coin_one_price);
-              // return false;
-              swal({
-                  title: "Success!",
-                  text: "Your token is buy successfully",
-                  icon: "success",
-                  button: "OK!",
-              }).then(function () {
-                  location.reload();
-              });
-          }
-      }
-  });
+                    axios({
+                        method: 'POST',
+                        url: process.env.REACT_APP_API_PATH + 'submit_item',
+                        data: formData,
+                    }).then(function (res) {
+                        console.log("resthen")
+                        console.log(res)
+    
+                    }).catch((err) => {
+                        const errors = err.response;
+                        console.log('errors')
+                        console.log(errors)
+                    })
+                }
+            }).catch((err) => {
+                const errors = err.response;
+                console.log('errors')
+                console.log(errors)
+            })
+        }
+        }).catch((err) => {
+            const errors = err.response;
+            console.log('errors')
+            console.log(errors)
+        });
+    };
+    const submitProfile = async (e) => {
+        e.preventDefault();
+        // submitImage()
+        submitItem()
+    };
+    const checkfun = (e)=>{
+        console.log(e.target.checked==1?"tru":"false")
+        if(e.target.checked)
+        {
+        itemdata.itemterms= 1
+        }else
+        {
+            itemdata.itemterms=0
+        }
+    }
+    const handleChange = ({ currentTarget: input }) => {
+        setitemdata({ ...itemdata, [input.name]: input.value })
+        console.log(itemdata)
+    }
+    useEffect (()=>{
+        getcollections()
+       },[])
+    return (
+        <>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-4 mt-5">
+                        <p className='color_pencile'>PREVIEW</p>
+                        <img src='https://snoozz.io/ver1/img/dummy-nft.jpg' id='pic' className='w-100' />
+                    </div>
+                    <div className="col-lg-8 mt-5">
+                        <form onSubmit={submitProfile} encType="multipart/form-data" id="imageForm" >
+                            <div className="container p-5 select_container mt-5">
+                                <p className='color_theme text-center'> PNG, JPG, JPEG
+                                    Height: 500, Width: 500</p>
+                                <div className='d-flex justify-content-center'>
+                                    <input type="file" id='nft_img' onChange={handleChangeimg} className="Snoozz_fn_button select_width shdow_green p-3 fwthin">
+                                    </input>
+                                </div>
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="title" className="form-label color_pencile">Title</label>
+                                <input type="text"  onChange={handleChange} name='title' className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="title" />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="price" className="form-label color_pencile">Price</label>
+                                <input type="number"  onChange={handleChange} name='price' min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="price" />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="royalites" className="form-label color_pencile">Royalties(%)</label>
+                                <input type="number"  onChange={handleChange} name='royalty' value="2" min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="royalites" />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="service_fees" className="form-label color_pencile">Service Fees(%)</label>
+                                <input type="number"  onChange={handleChange} value="8" name='fees' min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="service_fees" />
+                            </div>
+                            
+                            <label htmlFor="desc" className="form-label color_pencile">Description</label>
+                            <div className="form-floating">
+                                <textarea  onChange={handleChange} name='description' className="form-control bg-transparent border_theme_1px  color_theme p-2 " placeholder="Leave a comment here" id="desc"></textarea>
+                            </div>
+                            <div className="mb-3 mt-3">
+                           
+                            <label htmlFor="collectionlabel" className="form-label color_pencile">Collection</label>
+                                <select className="form-select bg-transparent color_theme"  onChange={handleChangecol}  name='collection' aria-label="Default select example">
+                                  {collection.map((e)=>{
+                                    return <option value={e.name}>{e.name}</option>
+                                  })}
+                                </select>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input color_theme" onClick={checkfun} type="checkbox" value="" id="flexCheckDefault" />
+                                <label className="form-check-label color_theme" htmlFor="flexCheckDefault">
+                                    By minting this NFT you agree that these works belong to you and only you. Please respect the creativity of other artists in the space. We would love you for it.
+                                </label>
+                            </div>
+                            <button type="submit" className="Snoozz_fn_button p-3 shdow_green mt-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
 }
-
-function gettokens(amount, per) {
-  if (amount >= 0) {
-      $.ajax({
-          url: route_gettokens,
-          type: 'POST',
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          dataType: 'JSON',
-          data: {
-              amount: amount,
-              per: per,
-          },
-          success: function (response) {
-              var total_amount = (response.total_tokens + response.bonus_tokens).toFixed(DECIMAL);
-              $(".tokens").html('Total Tokens = ' + response.total_tokens + ' + Bonus Tokens = ' +
-                  response.bonus_tokens);
-              $(".bonus-tokens").html(total_amount);
-              localStorage.setItem('tokens', total_amount);
-              localStorage.setItem('bonus_tokens', total_amount);
-          }
-      });
-  }
-}
-
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
-var upgradeTime = seconds_in_date;
-var seconds = upgradeTime;
-
-function timer() {
-  var days = Math.floor(seconds / 24 / 60 / 60);
-  var hoursLeft = Math.floor((seconds) - (days * 86400));
-  var hours = Math.floor(hoursLeft / 3600);
-  var minutesLeft = Math.floor((hoursLeft) - (hours * 3600));
-  var minutes = Math.floor(minutesLeft / 60);
-  var remainingSeconds = seconds % 60;
-
-  function pad(n) {
-      return (n < 10 ? "0" + n : n);
-  }
-  document.getElementById('days').innerHTML = pad(days);
-  document.getElementById('hours').innerHTML = pad(hours);
-  document.getElementById('min').innerHTML = pad(minutes);
-  document.getElementById('sec').innerHTML = pad(remainingSeconds);
-  if (seconds == 0) {
-      clearInterval(countdownTimer);
-      document.getElementById('timer-div').innerHTML = '<p class="pt-2 pb-2 ps-2 text_light">Wait for next bonus</p>';
-  } else {
-      seconds--;
-  }
-}
-var countdownTimer = setInterval('timer()', 1000);

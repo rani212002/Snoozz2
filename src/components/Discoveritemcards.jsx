@@ -7,36 +7,43 @@ export default function Discoveritemcards() {
 
   const navigate = useNavigate();
   const [nftdata, setNftdata] = useState([]);
+  const [likestatus,setlikestatus]= useState([])
   const userauth = get_user()
-
-
-  const getProfile = async () => {
+  const getNft = async () => {
+    console.log('userauth.id')
+    console.log(userauth.id)
     const postData = {user_id:userauth.id};
-    const response = axios({
+    axios({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       url: process.env.REACT_APP_API_PATH + "nft",
     }).then(async function (response) {
       const res = await response.data.data;
       console.log("hdhdhddh");
-      console.log(res.nfts);
+      console.log("res.nfts");
+      console.log(res);
       setNftdata(res.nfts);
     });
 };
-  function likefun(like_status) {
-    if(like_status == 1)
-    {
-      console.log("statusok")
-      like_status =0;
-    }
-    else if(like_status == 0)
-    {
-      console.log("status not ok")
-      like_status=1
-    };
+const likenft = async (id) => {
+  console.log(id)
+  console.log('userauth.id')
+  console.log(userauth.id)
+  const postData = { user_id:userauth.id,id:id};
+  const response = axios({
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    url: process.env.REACT_APP_API_PATH+"like",
+    data:postData
+  }).then(async function (response) {
+    const res = await response.data
+    console.log(res.data)
+    setlikestatus(res.data)
+    getNft()
+  });
   }
   useEffect(() => {
-    getProfile()
+    getNft()
   }, []);
   const getid =(id)=> {
     console.log(id)
@@ -58,7 +65,9 @@ export default function Discoveritemcards() {
                   alt="..."
                 />
                 <span class="badge black_one_bg position-absolute like_btn">
-                  <i type="button" onClick={()=>likefun(e.id,e.like_status)} class={(e.like_status) == 0 ? "fa-solid fa-heart fa-2x text-light" : "fa-solid fa-heart fa-2x text-danger"}></i>
+               
+                  <i type="button" onClick={() => likenft(e.id)}  className={e.like_status==1?"fa-solid fa-heart color_theme fa-2x ":"fa-solid fa-heart text-light fa-2x "}></i>
+                  {/* <i type="button" onClick={() => likenft(e.id)} class={(e.like_status) == 0 ? "fa-solid fa-heart fa-2x text-light" : "fa-solid fa-heart fa-2x text-danger"}></i> */}
                 </span>
                 <div className="card-body" onClick={()=>
               getid(e.id)}>

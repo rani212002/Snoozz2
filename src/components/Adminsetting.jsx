@@ -48,7 +48,11 @@ export default function Adminsetting() {
         setsetting({ ...setting, [e.target.name]: e.target.value })
         console.log(setting)
     }
-
+    const handleChangeper = (e) => {
+        console.log(e.value)
+        setrewardper(e.value)
+       
+    }
     const submitsetting = async () => {
         setting.user_id = userauth.id;
         

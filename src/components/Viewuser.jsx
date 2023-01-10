@@ -2,14 +2,16 @@
 import axios from 'axios';
 import { useEffect,useState } from 'react';
 import { get_user } from './allfun';
+import { useParams } from 'react-router-dom';
 export default function Viewuser() {
   const[userid,setuserid] = useState()
   const [userdata , setuserdata] = useState([])
   const userauth = get_user();
 
+  const param = useParams()
   useEffect(()=>{
     
-      const postData = { user_id: 2,id:2 };
+      const postData = { user_id: userauth.id,id:param.id};
       const response =  axios({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -27,10 +29,8 @@ export default function Viewuser() {
     <>
    <div className="border_theme_1px p-lg-5 p-3 rounded mt-5 mx-lg-5 mx-2">
     <div className="d-flex justify-content-end">
-
    <a type="a" class="btn btn_squre_theeme mx-1 ms-auto" href='/adminuser'>Back</a>
     </div>
-
     <h3 className='text-light'>Personal Information of user</h3>
       <div className="border_theme_1px p-lg-3 p-2 rounded">
         <div className="row text-center">

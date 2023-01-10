@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios'
-import Profiletabs from './Profiletabs'
 import '../css/profile.css'
 import { get_user } from './allfun';
 
@@ -25,7 +24,7 @@ export default function Profile() {
     )
     //getprofile
     const getProfile = async () => {
-        const postData = { user_id: 69 };
+        const postData = { user_id: userauth.id};
         console.log(63)
         const response = axios({
             method: 'POST',
@@ -55,7 +54,7 @@ export default function Profile() {
     //updateprofile
 
     const submitProfile = async () => {
-        profiledata.user_id = 69;
+        profiledata.user_id = userauth.id;
         const postData = profiledata;
         console.log('profiledata');
         console.log(profiledata);
@@ -126,8 +125,6 @@ export default function Profile() {
         }
         
     }
-
-    
     var handleimage = function (event) 
     {
       var images = document.getElementById("pic");

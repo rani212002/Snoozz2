@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios'
 import { get_user } from './allfun';
+
+import { useParams } from 'react-router-dom';
 export default function Adminverify() {
     const [success, setSuccess] = useState("")
     const [errors, setErrors] = useState([])
@@ -15,9 +17,10 @@ export default function Adminverify() {
             username: "",
         }
     )
+    const param = useParams();
     const userauth = get_user()
     useEffect(() => {
-        const postData = { user_id: 2,id:2 };
+        const postData = { user_id: userauth.id,id:param.id };
         const response = axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -114,7 +117,6 @@ export default function Adminverify() {
 								    <button type="button" className="btn-close" onClick={() => closeMessage(1)} ></button>
 								</div>
 							}
-
 					    	{errors != '' &&
 					    		<div className="alert alert-danger alert-dismissible fade show">
 								    <strong>Error!</strong> {errors}
@@ -141,7 +143,6 @@ export default function Adminverify() {
                                     <label htmlFor="username" className="form-label color_pencile">Coin Market Cap Username</label>
                                     <input type="text" name='username' className="form-control bg-transparent border_theme_1px inp_radius color_theme input  rounded"    onChange={handleChange}  placeholder='Your coinmarket cap username' id="collection" />
                                     {errors && <span className="text-danger">{errors.username}</span>}
-                                    
                                 </div>
                                 <div className="d-flex justify-content-center">
                                 <button type='button' className="Snoozz_fn_button p-3 border_grey_2px mt-3 mx-2" onClick={() => approveverification()}>Approve</button>

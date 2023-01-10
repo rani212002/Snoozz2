@@ -24,15 +24,12 @@ export default function Addcollection() {
             image: e.target.files[0],
             cover: e.target.files[0]
         });
-       
     }
     const handlename = (e) => {
-
         setcollname({
             colname: e.target.value,
         });
     }
-
     const submitProfile = async (e) => {
         e.preventDefault();
         console.log(data)

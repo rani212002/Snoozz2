@@ -46,21 +46,6 @@ export default function Buynft(props) {
       }
     ]
   };
-  // const [nftdata, setNftdata] = useState([]);
-  // const userauth = get_user()
-  // useEffect(() => {
-  //   const response = axios({
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     url: process.env.REACT_APP_API_PATH + "nft",
-  //   }).then(async function (response) {
-  //     const res = await response.data.data;
-  //     console.log("hdhdhddh");
-  //     // console.log(res.nfts);
-  //     setNftdata(res.nfts);
-  //   });
-  //   buynft()
-  // }, []);
 
   const userauth = get_user()
   const param = useParams();

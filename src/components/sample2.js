@@ -1,173 +1,156 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react';
-import { get_user ,smdate} from './allfun';
-import axios from 'axios';
-export default function Adminsetting() {
-
-    const [success, setSuccess] = useState("")
-    const [errors, setErrors] = useState([])
-    const [bonuspertable,setbonuspertable] = useState([])
-    const [settingdetails,setsettingdetails] = useState([])
-    const [rewardper,setrewardper] = useState([])
-
-    const [setting, setsetting] = useState(
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import '../css/additem.css'
+import accrord from '../img/accordian_side.png'
+import { get_user } from './allfun'
+export default function Additem() {
+    const userauth = get_user()
+    const [nft, setnft] = useState(
         {
-            bper: "",
-            sdate: "",
-            edate: "",
-            srvcfees: "",
-            rewardpercentage:"",
-            twitter:"twitter",  
+            image: "",
         }
     )
-    const userauth = get_user()
+    const [itemdata, setitemdata] = useState({
+        title:"",
+        price:"",
+        royalty:"",
+        fees:"",
+        description:"",
+        collection:""
 
- 
-    useEffect(() => {
-      
-        const postData = { user_id: userauth.id };
-        const response = axios({
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'setting',
-            data: postData
-        }).then(async function (response) {
-            const res = await response.data.data;
-            console.log(res)
-            settingdetails.bper_details = res.bper_details
-            setsetting(res)
-            setbonuspertable(res.bper_details)
-            setrewardper(res.percentages)
-            console.log(rewardper)
-        });
-    }, []);
+    })
 
-    const submitsetting = async () => {
-        setting.user_id = userauth.id;
-        // const postData = setting;
+    const submitImage = async (e) => {
+  
+        const formData = new FormData();
+        formData.append("image", nft.image);
+        formData.append("user_id", userauth.id);
         await axios({
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            url: process.env.REACT_APP_API_PATH + 'submit-setting',
-            // data: postData,
+            url: process.env.REACT_APP_API_PATH + 'validate-item',
+            data: formData,
         }).then(function (res) {
             if (res.data.success && res.data.success == 1) {
-                // setsetting(res)
-                setSuccess(res.data.message)
+                console.log('res')
                 console.log(res)
             } else {
-                setErrors(errors)
             }
+            console.log("resthen")
             console.log(res)
         }).catch((err) => {
-            const errors = err.response.data.data;
-            console.log(errors)
-            setErrors(errors)
+            const errors = err.response;
             console.log('errors')
             console.log(errors)
-            setSuccess("")
         });
     };
-    const closeMessage=(e) => {
-		if (e == 1) {
-			// setError("")
-			setSuccess("")
-		}
-	}
-    const handleChange = (e) => {
-        console.log(e.target.value)
-        setsetting({ ...setting, [e.name]: e.value })
 
-        // if (e.name == "") {
-        //     setErrors([])
-        // }
-        // if (e.value == '') {
-        //     setErrors({ ...errors, [e.name]: e.placeholder + ' is required!' })
-        // } else {
-        //     // setErrors({ ...errors, [e.name]: false })
-        // }
+
+    
+    const submitItem = async (e) => {
+       
+        const formData = new FormData();
+        formData.append("user_id", userauth.id);
+        formData.append("id",2);
+        formData.append("title",itemdata.title);
+        formData.append("price",itemdata.price);
+        formData.append("royalty",itemdata.royalty);
+        formData.append("fees",itemdata.fees);
+        formData.append("description",itemdata.desc);
+        formData.append("collection","NFT1");   
+        formData.append("insert_weekly_record",1)
+        formData.append("ipfs_hash","fjkefhfdhfdjkshfjkfhjskfhdkjfhjks")
+        await axios({
+            method: 'POST',
+            url: process.env.REACT_APP_API_PATH + 'validate_item',
+            data: formData,
+        }).then(function (res) {
+            console.log("resthen")
+            console.log(res)
+        }).catch((err) => {
+            const errors = err.response;
+            console.log('errors')
+            console.log(errors)
+        });
+    };
+    
+    const submitProfile = async (e) => {
+        e.preventDefault();
+        submitImage()
+        submitItem()
+    };
+
+    const handleChangeimg = function (event) {
+        var images = document.getElementById("pic");
+        images.src = URL.createObjectURL(event.target.files[0]);
+        setnft({
+            image: event.target.files[0],
+        })
+        console.log(event.target.files[0])
+    };
+
+    const handleChange = (e) => {
+        setitemdata({ ...itemdata, [e.name]: e.value })
+        
     }
 
     return (
         <>
-            <div className="container-fluied mx-5 top_sec_margin">
-                <form>
-                    <div className="row">
-                        <div className="col-lg-6">
-
-                            <div className="border_theme_1px p-3 rounded">
-
-                                <div className="mb-3">
-                                    <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
-                                    <input type="number" name="bper" value={setting.bonus_percentages}  onChange={handleChange} className="form-control text-dark input" id="bonuspercentage" />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="sdate" className="form-label color_theme">Start Date</label>
-                                    <input type="date" name="sdate"  onChange={handleChange} className="form-control text-dark input " id="sdate" />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="edate" className="form-label color_theme">End Date</label>
-                                    <input type="date" name="edate"  onChange={handleChange} className="form-control text-dark input " id="edate" />
-                                </div>
-                            </div>
-                            <div className="border_theme_1px p-3 rounded mt-2">
-                                <div className="mb-3">
-                                    <label htmlFor="number" className="form-label color_theme">Service Fees Percentage</label>
-                                    <input type="number" className="form-control text-dark input"  onChange={handleChange} name="srvcfees" id="servicep" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="border_theme_1px p-3 rounded">
-                                <label htmlFor="edate" className="form-label color_theme">Reward Percentage</label>
-                                {rewardper.map((e)=>{
-                                    return <div className="mb-2" key={e.id}>
-                                    <input type="number" onChange={handleChange} value={e.per}  name="rewardpercentage" className="form-control text-dark input" id="bonuspercentage" />
-                                </div>
-                                })
-                                }
-                                <label htmlFor="floatingTextarea2" name="twitter_post" className="form-label color_theme">Twitter Post</label>
-                                <textarea className="form-control text-dark input" value={setting.twitter_post} name="twitter" placeholder="Twitter POST" id="floatingTextarea2"></textarea>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                            <button type="button" className="Snoozz_fn_button p-3 border_grey_2px mt-3" onClick={() => submitsetting()}>Submit</button>
-                            </div>
-                        </div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-4 mt-5">
+                        <p className='color_pencile'>PREVIEW</p>
+                        <img src='https://snoozz.io/ver1/img/dummy-nft.jpg' id='pic' className='w-100' />
                     </div>
-                </form>
-                <hr>
-                </hr>
-                <div className="card bg-transparent border_theme_1px text-center mt-3 gl_morph ">
-                <div className="card-header color_theme ">
-                    <h5 className="h5 p-2 text-light">Bonus Percentage</h5>
-                </div>
-                <div className="card-body table-responsive">
-                    <table className="table text-light text-start border-2 wsnwrap">
-                        <thead>
-                            <tr className='text-center'>
-                           <th>Sr No</th>
-                            <th >Percentage(%)	</th>
-                            <th >Start Date</th>
-                            <th >End Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {bonuspertable.map((e,index) => {
-                              return<tr key = {e.id} className='text-center'>
-                                <td>{index+1}</td>
-                               <td>{e.percentage}</td>
-                                <td>{e.from_date}</td>
-                                <td>{e.end_date}</td>
-                            </tr>
-                          })}
-                         
-                        </tbody>
-                    </table>
+                    <div className="col-lg-8 mt-5">
+                        <form onSubmit={submitProfile} encType="multipart/form-data" id="imageForm" >
+                            <div className="container p-5 select_container mt-5">
+                                <p className='color_theme text-center'> PNG, JPG, JPEG
+                                    Height: 500, Width: 500</p>
+                                <div className='d-flex justify-content-center'>
+                                    <input type="file" id='nft_img' onChange={handleChangeimg} className="Snoozz_fn_button select_width shdow_green p-3 fwthin">
+                                    </input>
+                                </div>
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="title" className="form-label color_pencile">Title</label>
+                                <input type="text"  onChange={handleChange} name='title' className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="title" />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="price" className="form-label color_pencile">Price</label>
+                                <input type="number"  onChange={handleChange} name='price' min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="price" />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="royalites" className="form-label color_pencile">Royalties(%)</label>
+                                <input type="number"  onChange={handleChange} name='royalty' min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="royalites" />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label htmlFor="service_fees" className="form-label color_pencile">Service Fees(%)</label>
+                                <input type="number"  onChange={handleChange} name='fees' min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="service_fees" />
+                            </div>
+                            <label htmlFor="desc" className="form-label color_pencile">Description</label>
+                            <div className="form-floating">
+                                <textarea  onChange={handleChange} name='description' className="form-control bg-transparent border_theme_1px  color_theme p-2 " placeholder="Leave a comment here" id="desc"></textarea>
+                            </div>
+                            <div className="mb-3 mt-3">
+                            <label htmlFor="collectionlabel" className="form-label color_pencile">Collection</label>
+                                <select className="form-select bg-transparent color_theme"  onChange={handleChange} name='collection' aria-label="Default select example">
+                                    <option defaultValue>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input color_theme" type="checkbox" value="" id="flexCheckDefault" />
+                                <label className="form-check-label color_theme" htmlFor="flexCheckDefault">
+                                    By minting this NFT you agree that these works belong to you and only you. Please respect the creativity of other artists in the space. We would love you for it.
+                                </label>
+                            </div>
+                            <button type="submit" className="Snoozz_fn_button p-3 shdow_green mt-2" onClick={() => submitProfile()}>Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            </div>
-
         </>
     )
 }

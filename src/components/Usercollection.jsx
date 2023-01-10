@@ -6,14 +6,15 @@ import { useParams } from 'react-router-dom';
 import "../css/Usercollection.css";
 import Uercollectioncards from "./Uercollectioncards";
 export default function Usercollection() {
-    
+  const [likestatus,setlikestatus]= useState([])
   const [nftdata, setNftdata] = useState([]);
   const [userdata, setuserdata] = useState([]);
+  const [userdetail, setuserdetail] = useState([]);
   const userauth = get_user()
   const param = useParams();
   useEffect(() => {
-      // const postData = {user_id:userauth.id,id:param.id}
-    const postData = {user_id:2,id:2}
+      const postData = {user_id:userauth.id,id:param.id}
+    // const postData = {user_id:2,id:2}
     const response = axios({
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -23,12 +24,42 @@ export default function Usercollection() {
       const res = await response.data.data;
       console.log("hdhdhddh");
       console.log(res);
-      setuserdata(res.user_details)
+      setuserdata(res)
       setNftdata(res.nftproducts);
+      setuserdetail(res.user_details)
     });
   }, []);
   function likefun() {
     nftdata.like_status = 1;
+  }
+  const addtowatchlist = async (e) => {
+    const postData = {user_id:userauth.id,id:param.id,watchCol:userdetail.name}
+    const response = axios({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      url: process.env.REACT_APP_API_PATH + "watch-col",
+      data:postData
+    }).then(async function (response) {
+      const res = await response.data.data;
+      console.log("hdhdhddh");
+     
+      console.log(res);
+    });
+};
+const likenft = async (id) => {
+  console.log(id)
+  console.log(userauth.id)
+  const postData = {user_id:userauth.id,id:param.id}
+  const response = axios({
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    url: process.env.REACT_APP_API_PATH+"like-col",
+    data:postData
+  }).then(async function (response) {
+    const res = await response.data
+    console.log(res.data)
+    setlikestatus(res.data)
+  });
   }
     return (
         <>
@@ -48,17 +79,18 @@ export default function Usercollection() {
                                 <div className="mt-3 ms-1">
                                     <h5 className="color_pencile">{userdata.name}</h5>
                                     <p className="color_pencile">Created by {userdata.uname}</p>
+                                    <h6 className="color_theme">{userdetail.name}</h6>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <div className="d-flex justify-content-center  mt-3 mb-2">
                                 <div className="text-end">
-                                    <button ty pe="submit" className="Snoozz_fn_button p-3 shdow_green mt-2 mx-2"><i class="fa-solid fa-heart color_theme fa-sm me-1"></i>1 Like</button>
+                                    <button type="button" onClick={() => likenft(userdata.id)} className="Snoozz_fn_button p-3 shdow_green mt-2 mx-2"><i className={likestatus==1?"fa-solid fa-heart color_theme fa-sm me-1":"fa-solid fa-heart text-light fa-sm me-1"}></i>1 Like</button>
 
                                 </div>
                                 <div className="ms-1">
-                                    <button ty pe="submit" className="Snoozz_fn_button p-3 border_theme_1px mt-2 mx-2"><i class="fa-solid fa-plus color_theme fa-sm"></i> Add to Watchlist </button>
+                                    <button type="button" onClick={addtowatchlist} className="Snoozz_fn_button p-3 border_theme_1px mt-2 mx-2"><i class="fa-solid fa-plus color_theme fa-sm"></i> Add to Watchlist </button>
 
                                 </div>
                                 <div className="ms-1">

@@ -1,21 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { get_user } from './allfun'
 export default function Watchlistcard() {
     const[userid,setuserid] = useState()
     const [watchlist , setwatchlist] = useState([])
     const navigate = useNavigate();
+    const userauth = get_user()
 
     useEffect(()=>{
-        let localData=localStorage.getItem('userauth');
-        let data = JSON.parse(localData)
-        console.log('data');
-        console.log(data.id);
-        setuserid(data)
-        console.log('userid')
-        // console.log(userid)
-        
-        const postData = { user_id: userid };
+        const postData = { user_id: userauth.id };
         const response =  axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -28,9 +22,6 @@ export default function Watchlistcard() {
               setwatchlist(res)
             });
     }, [])
-    console.log("i am activity")
-    console.log(watchlist)
-    
   const getid =(id)=> {
     console.log(id)
      navigate(`/buynft/${id}`);

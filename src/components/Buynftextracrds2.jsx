@@ -94,7 +94,6 @@ export default function Buynftextracrds2() {
                                 </div>
                               </td>
                               <td>5 Days</td>
-
                             </tr>
                           </tbody>
                         </table>

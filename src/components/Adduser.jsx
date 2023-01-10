@@ -42,11 +42,9 @@ export default function Adduser() {
             if (res.data.success && res.data.success == 1) {
                 setSuccess(res.data.message)
                 console.log(res.data)
-
             } else {
             }
         }).catch((err) => {
-
             const errors = err.response.data.data;
             console.log(errors)
             setErrors(errors)
@@ -160,7 +158,6 @@ export default function Adduser() {
                     </div>
                 </div>
             </div>
-
     </>
   )
 }

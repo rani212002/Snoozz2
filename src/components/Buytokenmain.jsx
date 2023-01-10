@@ -47,8 +47,6 @@ export default function Buytokenmain() {
             console.log(errors)
         });
     };
- 
-
     // get amount
     const inptwo = (e)=>{   
         e.target.value = Math.abs(e.target.value)
@@ -58,7 +56,6 @@ export default function Buytokenmain() {
         gettoken()
     }
     //select coin 
-
     function handlechange(e) {
         getcoin()
         gettoken()
@@ -68,7 +65,6 @@ export default function Buytokenmain() {
         setresult(localStorage.getItem("currentinp")/localStorage.getItem(localStorage.getItem("selectedcoin")))
         setcoin(e)
     }
-
     //onpage data
     useEffect(()=>{
         const postData = { user_id: 2,id:2};
@@ -84,8 +80,6 @@ export default function Buytokenmain() {
               
             });
     }, [])
-
-    
     const gettoken = (e) => {
         const postData = {amount:currentinp,per:buytoken.per };
         console.log("postData")
@@ -106,9 +100,11 @@ export default function Buytokenmain() {
         const formData = new FormData();
 
         formData.append("user_id", usersauth.id);
-        formData.append("id", 2);
+        // formData.append("id", 2);
+        // formData.append("id", 2);
         formData.append("selected_coin",coin)
         formData.append("coin_dlr_price",eth)
+
         formData.append("per",buytoken.per)
         formData.append("coin_one_price",currentinp)
         formData.append("coin_two_price",result)
@@ -143,7 +139,6 @@ export default function Buytokenmain() {
 useEffect(()=>{
     getcoin()
     console.log(localStorage.getItem("selectedcoin")==null)
-
   if(!localStorage.getItem("selectedcoin")!==null)
   {
     localStorage.setItem("selectedcoin", "bnb")

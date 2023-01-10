@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../css/discover.css'
 import Discoveritemcards from './Discoveritemcards'
 
 export default function Discover_item() {
+    const [post,setPost]= useState([])
+    const [loading,setloading]= useState(false)
+    const [currentpage,setcurrentpage]= useState(1)
+    const [postperpage,setpostperpage]= useState(10)
     return (
         <>
             <div className="container  mt-5">
