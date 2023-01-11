@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import {get_user} from '../components/allfun.js'
 import { useNavigate } from 'react-router-dom';
-
+import profile from '../img/Profile.png'
 
 export default function Discovercollectioncard() {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function Discovercollectioncard() {
             <div className="card discovercollcard  bg-transparent" key={e.id} >
                 <div className="row">
                     <div className='col-4'>
-                        <img src='https://snoozz.io/ver1/img/profileimage/Profile.png' class="w-75 artist_img ms-2 mt-2" alt="..." />
+                        <img src={profile} class="w-75 artist_img ms-2 mt-2" alt="..." />
                     </div>  
                     <div className='col-5'  onClick={()=>
               getid(e.id)}>

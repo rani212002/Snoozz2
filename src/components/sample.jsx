@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../css/additem.css'
 import accrord from '../img/accordian_side.png'
+import dummynft from '../img/dummy-nft'
 import { get_user } from './allfun'
 export default function Additem() {
     const userauth = get_user()
@@ -142,7 +143,7 @@ export default function Additem() {
                 <div className="row">
                     <div className="col-lg-4 mt-5">
                         <p className='color_pencile'>PREVIEW</p>
-                        <img src='https://snoozz.io/ver1/img/dummy-nft.jpg' id='pic' className='w-100' />
+                        <img src={dummynft} id='pic' className='w-100' />
                     </div>
                     <div className="col-lg-8 mt-5">
                         <form onSubmit={submitProfile} encType="multipart/form-data" id="imageForm" >

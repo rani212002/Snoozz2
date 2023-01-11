@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import axios from 'axios'
 import { Wallet } from "ethers";
 import { smallwalletaddress, get_user } from './allfun';
-
+import profile from '../img/Profile.png'
 export default function Artistcards() {
     const [artistData, setartistData] = useState([]);
     const userauth = get_user();
@@ -51,7 +51,7 @@ export default function Artistcards() {
         <div className="card  artist_card bg-transparent  h-100">
                 <div className="card-body ">
                     <div className="d-flex justify-content-center">
-                        <img src='https://snoozz.io/ver1/img/profileimage/Profile.png' className="w-50 artist_img" alt="..." />
+                        <img src={profile} className="w-50 artist_img" alt="..." />
                     </div>
                     <h5 className="card-title color_pencile mt-1">{e.name==""?"user":e.name}</h5>
                     <p className="card-text color_pencile">{e.wallet ==""?smallwalletaddress(e.Wallet):e.wallet}</p>

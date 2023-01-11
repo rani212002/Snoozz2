@@ -1,7 +1,15 @@
+import sell_whitelist from '../img/sell_whitelist.png'
+import generate from '../img/generate.png'
+import integrate from '../img/integrate.png'
+import Learn from '../img/Learn.png'
+// import sell_whitelist from '../img/sell_whitelist.png'
+// import sell_whitelist from '../img/sell_whitelist.png'
+
+
 
 const Accrod_data = [{
     id: 1,
-    img: 'https://snoozz.io/ver1/img/home/sell_whitelist.png',
+    img: sell_whitelist,
     tab_heading: 'Sell,Whitelist, or Airdrop.',
     tab_content: " Conduct every type of NFT drop with ease, even if it's your first  time.Decide a sale price, let people make private offers for your NFT, and a lot more.",
     acc_heading_id: "headingOne",
@@ -13,7 +21,7 @@ const Accrod_data = [{
 },
 {
     id: 2,
-    img: 'https://snoozz.io/ver1/img/home/generate.png',
+    img: generate,
     tab_heading: 'Generate, List, and Mint in a jiffy',
     tab_content: " Use our NFT Generator (available only on request), list NFTs inthousands, and mint NFTs with zero gas fees!",
     acc_heading_id: "headingTwo",
@@ -25,7 +33,7 @@ const Accrod_data = [{
 },
 {
     id: 3,
-    img: 'https://snoozz.io/ver1/img/home/integrate.png',
+    img: integrate,
     tab_heading: 'Integrate seamlessly with your favorite tools',
     tab_content: "Choose from a ton of native integrations including Shopify, Google Analytics, Mixpanel, Mailchimp, Zapier, etc",
     acc_heading_id: "headingThree",
@@ -37,7 +45,7 @@ const Accrod_data = [{
 },
 {
     id: 4,
-    img: 'https://snoozz.io/ver1/img/home/Learn.png',
+    img: Learn,
     tab_heading: 'Learn,execute, and grow with Snoozz',
     tab_content: " Snoozz empowers you with free Web3 academy, Webinars with global Web3 experts, newsletters, blogs and Twitter Spaces.Choose your favorite mode and start learning.",
     acc_heading_id: "headingFour",
@@ -49,7 +57,7 @@ const Accrod_data = [{
 },
 {
     id: 5,
-    img: 'https://snoozz.io/ver1/img/home/integrate.png',
+    img: integrate,
     tab_heading: 'Ensuring your success.',
     tab_content: "  Technical support, strategic guidance or marketing assistance, we are with you all the way!",
     acc_heading_id: "headingFive",

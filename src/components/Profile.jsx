@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios'
 import '../css/profile.css'
 import { get_user } from './allfun';
-
+import profile from '../img/Profile.png'
 export default function Profile() {
     const [countrydata, setcountryData] = useState([])
     const [pic, setpic] = useState(
@@ -149,7 +149,7 @@ export default function Profile() {
                         <div className="card bg-transparent border_none w-100">
                             <div className="card-body">
                                 <div className="d-flex justify-content-center">
-                                    <img src="https://snoozz.io/ver1/img/profileimage/Profile.png" id='pic' className="w-75 artist_img" alt="..." />
+                                    <img src={profile} id='pic' className="w-75 artist_img" alt="..." />
                                 </div>
                             </div>
                         </div>

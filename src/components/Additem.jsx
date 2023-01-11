@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../css/additem.css'
+import dummy from '../img/dummy-nft.jpg'
 import accrord from '../img/accordian_side.png'
 import $ from "jquery";
 import { get_user } from './allfun'
@@ -60,11 +61,11 @@ export default function Additem() {
         const formData = new FormData();
         formData.append("user_id", userauth.id);
         formData.append("title",itemdata.title);
-        formData.append("royalty",2);
-        formData.append("fees",8);
+        // formData.append("royalty",2);
+        // formData.append("fees",8);
         formData.append("price",itemdata.price);
-        // formData.append("royalty",itemdata.royalty);
-        // formData.append("fees",itemdata.fees);
+        formData.append("royalty",itemdata.royalty);
+        formData.append("fees",itemdata.fees);
         formData.append("description",itemdata.desc);
         formData.append("collection",itemdata.collection);   
         formData.append("item-terms", "1");
@@ -76,14 +77,11 @@ export default function Additem() {
         }).then(function (res) {
             console.log("resthen")
             console.log(res)
-            if (res != "" && res.image_exist) {
-                formData.append("ipfs_hash", res.IpfsHash);
-                formData.append("insert_weekly_record", res.insert_weekly_record);
-                formData.append("update_weekly_record", res.update_weekly_record);
-                formData.append("increment_weekly_record",res.increment_weekly_record);
-                setresone(res)
+            if (res.status == 200) {
+                console.log("res succes")
                 uplaod()
-        }
+            }
+      
         }).catch((err) => {
             const errors = err.response;
             console.log('errors')
@@ -94,7 +92,7 @@ export default function Additem() {
     
 
 
-    const uplaod = async(e)=>{
+    const uplaod = async()=>{
         console.log("upload running")
         const formData = new FormData();
         formData.append("user_id", userauth.id);
@@ -102,8 +100,8 @@ export default function Additem() {
         formData.append("price",itemdata.price);
         formData.append("royalty",2);
         formData.append("fees",8);
-        // formData.append("royalty",itemdata.royalty);
-        // formData.append("fees",itemdata.fees);
+        formData.append("royalty",itemdata.royalty);
+        formData.append("fees",itemdata.fees);
         formData.append("description",itemdata.desc);
         formData.append("collection",itemdata.collection);   
         formData.append("item-terms", "1");
@@ -120,6 +118,15 @@ export default function Additem() {
             if (res){
                 console.log("resthen")
                 console.log(res)
+                 if (res != "" && res.image_exist) {
+                formData.append("ipfs_hash", res.IpfsHash);
+                formData.append("insert_weekly_record", res.insert_weekly_record);
+                formData.append("update_weekly_record", res.update_weekly_record);
+                formData.append("increment_weekly_record",res.increment_weekly_record);
+                setresone(res)
+                console.log('innn')
+              
+        }
                 setrestwo(res)
                 submitall()
             }
@@ -136,8 +143,8 @@ export default function Additem() {
         formData.append("title",itemdata.title);
         formData.append("price",itemdata.price);
         // formData.append("royalty",itemdata.royalty);
-        formData.append("royalty",2);
-        formData.append("fees",8);
+        formData.append("royalty",itemdata.royalty);
+        formData.append("fees",itemdata.fees);
         // formData.append("fees",itemdata.fees);
         formData.append("description",itemdata.desc);
         formData.append("collection",itemdata.collection);   
@@ -203,7 +210,7 @@ export default function Additem() {
                 <div className="row">
                     <div className="col-lg-4 mt-5">
                         <p className='color_pencile'>PREVIEW</p>
-                        <img src='https://snoozz.io/ver1/img/dummy-nft.jpg' id='pic' className='w-100' />
+                        <img src={dummy} id='pic' className='w-100' />
                     </div>
                     <div className="col-lg-8 mt-5">
                         <form onSubmit={submitProfile} encType="multipart/form-data" id="imageForm" >
@@ -225,11 +232,11 @@ export default function Additem() {
                             </div>
                             <div className="mb-3 mt-3">
                                 <label htmlFor="royalites" className="form-label color_pencile">Royalties(%)</label>
-                                <input type="number"  onChange={handleChange} name='royalty' value={2}  min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="royalites" />
+                                <input type="number"  onChange={handleChange} name='royalty'   min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="royalites" />
                             </div>
                             <div className="mb-3 mt-3">
                                 <label htmlFor="service_fees" className="form-label color_pencile">Service Fees(%)</label>
-                                <input type="number"  onChange={handleChange} name='fees'  min="0" value={8} className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="service_fees" />
+                                <input type="number"  onChange={handleChange} name='fees'  min="0" className="form-control bg-transparent border_theme_1px  color_theme p-2 " id="service_fees" />
                             </div>
                             {/* <div className="mb-3 mt-3">
                                 <label htmlFor="final_price" className="form-label color_pencile">Final Price(%)</label>

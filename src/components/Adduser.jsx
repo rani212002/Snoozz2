@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { useEffect,useState } from 'react';
 import { get_user } from './allfun';
+import profile from '../img/Profile.png'
 
 export default function Adduser() {
     const userauth = get_user()
@@ -81,7 +82,7 @@ export default function Adduser() {
                         <div className="card bg-transparent border_none w-100">
                             <div className="card-body">
                                 <div className="d-flex justify-content-center">
-                                    <img src="https://snoozz.io/ver1/img/profileimage/Profile.png" className="w-75 artist_img" alt="..." />
+                                    <img src={profile} className="w-75 artist_img" alt="..." />
                                 </div>
                             </div>
                         </div>

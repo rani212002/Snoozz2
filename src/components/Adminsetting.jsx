@@ -51,7 +51,7 @@ export default function Adminsetting() {
     const handleChangeper = (e) => {
         console.log(e.value)
         setrewardper(e.value)
-       
+
     }
     const submitsetting = async () => {
         setting.user_id = userauth.id;
@@ -92,9 +92,7 @@ export default function Adminsetting() {
                 <form>
                     <div className="row">
                         <div className="col-lg-6">
-
                             <div className="border_theme_1px p-3 rounded">
-
                                 <div className="mb-3">
                                     <label htmlFor="bonuspercentage" className="form-label color_theme">Bonus Percentage</label>
                                     <input type="number" name="bonus_percentages" value={setting.bonus_percentages} onChange={handleChange}  className="form-control text-dark input" id="bonuspercentage" />
@@ -158,7 +156,6 @@ export default function Adminsetting() {
                                 <td>{e.end_date}</td>
                             </tr>
                           })}
-                         
                         </tbody>
                     </table>
                 </div>

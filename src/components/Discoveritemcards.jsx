@@ -10,8 +10,7 @@ export default function Discoveritemcards() {
   const [likestatus,setlikestatus]= useState([])
   const userauth = get_user()
   const getNft = async () => {
-    console.log('userauth.id')
-    console.log(userauth.id)
+   
     const postData = {user_id:userauth.id};
     axios({
       method: "POST",
@@ -19,16 +18,12 @@ export default function Discoveritemcards() {
       url: process.env.REACT_APP_API_PATH + "nft",
     }).then(async function (response) {
       const res = await response.data.data;
-      console.log("hdhdhddh");
-      console.log("res.nfts");
+    
       console.log(res);
       setNftdata(res.nfts);
     });
 };
 const likenft = async (id) => {
-  console.log(id)
-  console.log('userauth.id')
-  console.log(userauth.id)
   const postData = { user_id:userauth.id,id:id};
   const response = axios({
     method: "POST",
@@ -65,7 +60,6 @@ const likenft = async (id) => {
                   alt="..."
                 />
                 <span class="badge black_one_bg position-absolute like_btn">
-               
                   <i type="button" onClick={() => likenft(e.id)}  className={e.like_status==1?"fa-solid fa-heart color_theme fa-2x ":"fa-solid fa-heart text-light fa-2x "}></i>
                   {/* <i type="button" onClick={() => likenft(e.id)} class={(e.like_status) == 0 ? "fa-solid fa-heart fa-2x text-light" : "fa-solid fa-heart fa-2x text-danger"}></i> */}
                 </span>
