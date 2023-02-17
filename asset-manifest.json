@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.00a62868.css",
+    "main.js": "/static/js/main.3e157238.js",
+    "static/js/787.83bb328f.chunk.js": "/static/js/787.83bb328f.chunk.js",
+    "static/media/nft_tabs_img.png": "/static/media/nft_tabs_img.669e93b40db913916f87.png",
+    "static/media/accordian_side.png": "/static/media/accordian_side.a7a2ca09d990d2b0db94.png",
+    "static/media/stake_tab_img.png": "/static/media/stake_tab_img.7121be0a4feb126864b2.png",
+    "static/media/referaal_tabs_img.png": "/static/media/referaal_tabs_img.7eaf37d04498072e60b9.png",
+    "static/media/coinsmain.png": "/static/media/coinsmain.26a9ec274d5194195896.png",
+    "static/media/referral_page.png": "/static/media/referral_page.e486f563ca38f2320d02.png",
+    "static/media/cover.jpg": "/static/media/cover.3d6580b53a4ee13d2945.jpg",
+    "static/media/staking_reward.png": "/static/media/staking_reward.702c2131fc919bbdb414.png",
+    "static/media/Stakenow_tab1.png": "/static/media/Stakenow_tab1.b12ca29c4251f4437346.png",
+    "static/media/homepagethree.jpg": "/static/media/homepagethree.7f28ab1d101553896dd2.jpg",
+    "static/media/staking_reward_sec_one.png": "/static/media/staking_reward_sec_one.7edfec3c2d0c2b5a3e54.png",
+    "static/media/dummy_image.jpg": "/static/media/dummy_image.4700009aad972686a55c.jpg",
+    "static/media/Profile.png": "/static/media/Profile.a8c37e6de7ed39dd51bc.png",
+    "static/media/homepageone.jpg": "/static/media/homepageone.125fdc11d15664ab9410.jpg",
+    "static/media/homepagetwo.jpg": "/static/media/homepagetwo.448d7178c790d7b5df80.jpg",
+    "static/media/dummy-nft.jpg": "/static/media/dummy-nft.fcad8520c66bb9fa5b9b.jpg",
+    "static/media/KYC.png": "/static/media/KYC.86e361ab5c755a2df50c.png",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "main.00a62868.css.map": "/static/css/main.00a62868.css.map",
+    "main.3e157238.js.map": "/static/js/main.3e157238.js.map",
+    "787.83bb328f.chunk.js.map": "/static/js/787.83bb328f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.00a62868.css",
+    "static/js/main.3e157238.js"
+  ]
+}
